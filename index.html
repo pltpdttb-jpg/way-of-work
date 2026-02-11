@@ -3,340 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Mastery System: Learn, Train, Success</title>
+    <title>Sales Mastery: Advanced Training</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Prompt', sans-serif; }
-        
-        /* Transition for switching pages */
-        .page-section {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .page-section.active {
-            display: block;
-            opacity: 1;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        /* Input Validation Styles */
-        .input-correct {
-            border-color: #22c55e !important;
-            background-color: #f0fdf4 !important;
-            color: #15803d !important;
-        }
-        .input-wrong {
-            border-color: #ef4444 !important;
-            background-color: #fef2f2 !important;
-            color: #b91c1c !important;
-        }
+    <style>
+        body { font-family: 'Prompt', sans-serif; background-color: #f8fafc; }
+        
+        /* Transitions */
+        .page-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+        .page-section.active { display: block; opacity: 1; }
+
+        /* Inputs */
+        input:focus { outline: none; border-color: #6366f1; ring: 2px; }
+        
+        /* Validation States */
+        .valid-field { border-color: #22c55e !important; background-color: #f0fdf4 !important; color: #15803d; }
+        .invalid-field { border-color: #ef4444 !important; background-color: #fef2f2 !important; color: #b91c1c; }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+<body class="h-screen flex flex-col overflow-hidden text-slate-800">
 
-    <header class="bg-white shadow-sm z-20 flex-none">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+    <header class="bg-white shadow-sm z-20 flex-none border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
                 <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">S</div>
-                <h1 class="font-bold text-xl text-indigo-900 tracking-tight">Sales<span class="text-indigo-600">Mastery</span></h1>
+                <h1 class="font-bold text-xl text-indigo-900">Sales<span class="text-indigo-600">Mastery</span> Pro</h1>
             </div>
-            <button onclick="toggleHelp()" class="text-gray-500 hover:text-indigo-600 transition flex items-center gap-1 text-sm font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                คู่มือใช้งาน
-            </button>
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-500">
+                <button onclick="navigateTo('home')" class="hover:text-indigo-600">หน้าหลัก</button>
+                <button onclick="navigateTo('learning')" class="hover:text-indigo-600">ห้องเรียนรู้</button>
+                <button onclick="navigateTo('training')" class="text-indigo-600">โหมดฝึกฝน</button>
+            </nav>
         </div>
     </header>
 
-    <main class="flex-grow overflow-y-auto p-4 md:p-6 relative">
-        
-        <div id="home" class="page-section active max-w-5xl mx-auto">
-            <div class="text-center py-10">
-                <h2 class="text-4xl font-bold text-slate-800 mb-4">พัฒนาทักษะการขายด้วยวิทยาศาสตร์</h2>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-10">เรียนรู้คำศัพท์ ฝึกคำนวณ Funnel และจำลองสถานการณ์จริง เพื่อเพิ่มยอด APE อย่างเป็นระบบ</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div onclick="navigateTo('learning')" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer border border-slate-100 group">
-                        <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">📚</div>
-                        <h3 class="text-xl font-bold mb-2">1. ห้องเรียนรู้ (Learning)</h3>
-                        <p class="text-slate-500 text-sm">ทำความเข้าใจ Case Size, Count, Conversion และสูตรคำนวณพื้นฐาน</p>
-                    </div>
+    <main class="flex-grow overflow-y-auto p-4 md:p-6 bg-slate-50 relative">
 
-                    <div onclick="navigateTo('training')" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer border border-slate-100 group">
-                        <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">🏋️</div>
-                        <h3 class="text-xl font-bold mb-2">2. สนามฝึกฝน (Training)</h3>
-                        <p class="text-slate-500 text-sm">รับโจทย์จากระบบ แล้วลองคำนวณตัวเลขในแต่ละขั้นตอนให้ถูกต้อง</p>
-                    </div>
-
-                    <div onclick="navigateTo('simulator')" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer border border-slate-100 group">
-                        <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">🚀</div>
-                        <h3 class="text-xl font-bold mb-2">3. ใช้งานจริง (Simulator)</h3>
-                        <p class="text-slate-500 text-sm">เครื่องมือวางแผน APE และปรับกลยุทธ์สำหรับงานขายของคุณเอง</p>
-                    </div>
+        <div id="home" class="page-section active max-w-4xl mx-auto text-center pt-10">
+            <h1 class="text-4xl font-bold text-slate-800 mb-4">ยินดีต้อนรับสู่ระบบฝึกอบรมการขาย</h1>
+            <p class="text-slate-600 mb-8">เรียนรู้การคำนวณ Sales Funnel จากโจทย์จริง วิเคราะห์จุดอ่อน และวางแผนสู่เป้าหมาย</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <div onclick="navigateTo('learning')" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer border border-slate-100">
+                    <div class="text-4xl mb-3">📚</div>
+                    <h3 class="text-xl font-bold mb-2">เรียนรู้พื้นฐาน</h3>
+                    <p class="text-sm text-gray-500">Case Size, Issued Rate และสูตรคำนวณต่างๆ</p>
+                </div>
+                <div onclick="navigateTo('training')" class="bg-indigo-600 text-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer hover:bg-indigo-700">
+                    <div class="text-4xl mb-3">🏋️‍♀️</div>
+                    <h3 class="text-xl font-bold mb-2">เริ่มฝึกฝน (Training)</h3>
+                    <p class="text-sm text-indigo-100">รับโจทย์ วางแผนตัวเลข และรับคำแนะนำจาก AI Coach</p>
                 </div>
             </div>
         </div>
 
         <div id="learning" class="page-section max-w-4xl mx-auto">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-slate-800">📚 ห้องเรียนรู้คำศัพท์และสูตร</h2>
-                <button onclick="navigateTo('training')" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center gap-1">
-                    ข้ามไปฝึกฝน <span class="text-lg">→</span>
-                </button>
-            </div>
-
+            <button onclick="navigateTo('home')" class="mb-4 text-sm text-gray-500 hover:text-indigo-600">← กลับหน้าหลัก</button>
+            <h2 class="text-2xl font-bold mb-6">📚 นิยามศัพท์และสูตรคำนวณ</h2>
             <div class="space-y-4">
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-5 cursor-pointer bg-slate-50 hover:bg-slate-100 flex justify-between items-center" onclick="toggleAccordion('learn1')">
-                        <div class="flex items-center gap-3">
-                            <span class="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">Basics</span>
-                            <h3 class="font-bold text-lg">APE & Case Size คืออะไร?</h3>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                    <div id="learn1" class="hidden p-5 border-t border-slate-200">
-                        <ul class="space-y-3 text-slate-700">
-                            <li><strong>APE (Annual Premium Equivalent):</strong> คือ ยอดเบี้ยประกันรายปี หรือยอดขายรวมที่เราต้องการทำได้</li>
-                            <li><strong>Case Size (Ticket Size):</strong> คือ ยอดขายเฉลี่ยต่อลูกค้า 1 ราย <br><code class="bg-gray-100 px-2 py-1 rounded text-sm">สูตร: APE ÷ จำนวนราย (Case Count)</code></li>
-                            <li><strong>Case Count:</strong> จำนวนลูกค้าที่ปิดการขายได้สำเร็จ</li>
-                        </ul>
-                        <div class="mt-4 bg-blue-50 p-3 rounded-lg text-sm text-blue-800">
-                            💡 <strong>ตัวอย่าง:</strong> ถ้าต้องการ APE 100,000 บาท และขายลูกค้าได้ 5 ราย <br>
-                            แปลว่า <strong>Case Size</strong> ของคุณคือ 100,000 ÷ 5 = 20,000 บาท/ราย
-                        </div>
-                    </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border">
+                    <h3 class="font-bold text-lg text-indigo-700 mb-2">1. Case Size (ขนาดเบี้ยเฉลี่ย)</h3>
+                    <p class="text-gray-600 mb-2">คือ ยอดขายรวมหารด้วยจำนวนราย เพื่อดูว่าปกติเราขายลูกค้าต่อคนได้เท่าไหร่</p>
+                    <code class="bg-gray-100 p-2 rounded block w-full text-center">Case Size = ผลงาน APE รวม (อดีต) ÷ จำนวนรายรวม (อดีต)</code>
                 </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-5 cursor-pointer bg-slate-50 hover:bg-slate-100 flex justify-between items-center" onclick="toggleAccordion('learn2')">
-                        <div class="flex items-center gap-3">
-                            <span class="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Funnel</span>
-                            <h3 class="font-bold text-lg">Sales Funnel 4 ขั้นตอน</h3>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                    <div id="learn2" class="hidden p-5 border-t border-slate-200">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 text-center text-sm">
-                            <div class="p-3 bg-blue-100 rounded text-blue-900 font-bold">1. Lead<br><span class="font-normal text-xs">รายชื่อมุ่งหวัง</span></div>
-                            <div class="p-3 bg-blue-200 rounded text-blue-900 font-bold">2. Met<br><span class="font-normal text-xs">นัดพบได้</span></div>
-                            <div class="p-3 bg-indigo-200 rounded text-indigo-900 font-bold">3. Offer<br><span class="font-normal text-xs">ได้นำเสนอ</span></div>
-                            <div class="p-3 bg-green-200 rounded text-green-900 font-bold">4. Closed<br><span class="font-normal text-xs">ปิดการขาย</span></div>
-                        </div>
-                        <p class="mt-4 text-slate-600">
-                            ในแต่ละขั้นตอนจะมี <strong>"คนหายไป"</strong> เสมอ เราเรียกอัตราส่วนคนที่ผ่านไปขั้นต่อไปว่า <strong>Conversion Rate (%)</strong>
-                        </p>
-                    </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border">
+                    <h3 class="font-bold text-lg text-indigo-700 mb-2">2. Issued Rate vs Submitted</h3>
+                    <p class="text-gray-600 mb-2">งานที่ส่งเข้าบริษัท (Submit) อาจไม่อนุมัติทั้งหมด (Issued) ดังนั้นต้องเผื่อยอดส่งงานให้มากกว่าเป้าหมาย</p>
+                    <code class="bg-gray-100 p-2 rounded block w-full text-center">APE Submitted = เป้าหมาย APE Issued ÷ (Issued Rate % / 100)</code>
                 </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-5 cursor-pointer bg-slate-50 hover:bg-slate-100 flex justify-between items-center" onclick="toggleAccordion('learn3')">
-                        <div class="flex items-center gap-3">
-                            <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">Math</span>
-                            <h3 class="font-bold text-lg">วิธีคำนวณยอดคนใน Funnel</h3>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                    <div id="learn3" class="hidden p-5 border-t border-slate-200">
-                        <p class="mb-2">ใช้การคูณ % เข้าไปในแต่ละขั้น (ปัดเศษทศนิยมตามหลักคณิตศาสตร์)</p>
-                        <div class="bg-slate-800 text-white p-4 rounded-lg font-mono text-sm space-y-2">
-                            <p>Lead = 100 คน</p>
-                            <p>Rate (Lead→Met) = 50%</p>
-                            <p class="text-green-400">>> จำนวนคน Met = 100 x 50% = 50 คน</p>
-                            <br>
-                            <p>Rate (Met→Offer) = 80%</p>
-                            <p class="text-green-400">>> จำนวนคน Offer = 50 x 80% = 40 คน</p>
-                        </div>
-                    </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border">
+                    <h3 class="font-bold text-lg text-indigo-700 mb-2">3. Conversion Rate (อัตราการแปลงผล)</h3>
+                    <p class="text-gray-600">ตัวเลขที่บ่งบอกความสามารถในการพาคนข้ามขั้นตอน เช่น จากโทรนัด -> นัดได้กี่ %</p>
                 </div>
-            </div>
-            
-            <div class="mt-8 text-center">
-                <button onclick="navigateTo('training')" class="bg-indigo-600 text-white px-8 py-3 rounded-full hover:bg-indigo-700 shadow-lg font-bold text-lg transition transform hover:scale-105">
-                    เข้าใจแล้ว! ไปเริ่มฝึกฝนกันเลย 🚀
-                </button>
             </div>
         </div>
 
-        <div id="training" class="page-section max-w-4xl mx-auto">
-            <div class="flex justify-between items-end mb-6">
+        <div id="training" class="page-section max-w-5xl mx-auto pb-20">
+            
+            <div class="flex justify-between items-center mb-6">
                 <div>
-                    <h2 class="text-2xl font-bold text-slate-800">🏋️ สนามฝึกฝน (Training Drill)</h2>
-                    <p class="text-slate-500 text-sm">จงเติมตัวเลขในช่องว่างให้ถูกต้องตามโจทย์ที่ได้รับ</p>
+                    <h2 class="text-2xl font-bold text-slate-800">🏋️ Training Simulator</h2>
+                    <p class="text-sm text-slate-500">วิเคราะห์โจทย์และวางแผนตัวเลขให้สอดคล้องกัน</p>
                 </div>
-                <button onclick="generateScenario()" class="bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-50 text-sm font-medium flex items-center gap-2">
+                <button onclick="generateScenario()" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 text-sm font-medium">
                     🔄 สุ่มโจทย์ใหม่
                 </button>
             </div>
 
-            <div class="bg-indigo-900 text-white p-6 rounded-xl shadow-lg mb-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">🎯</div>
-                <h3 class="text-indigo-200 text-sm font-bold uppercase tracking-wider mb-2">โจทย์ของคุณ:</h3>
-                <p class="text-xl md:text-2xl font-light leading-relaxed" id="scenarioText">
-                    กำลังโหลดโจทย์...
-                </p>
-                <div class="mt-4 flex flex-wrap gap-4 text-sm font-mono text-indigo-300">
-                    <span id="scen-lead">Leads: --</span>
-                    <span id="scen-ticket">Ticket: --</span>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold flex-none">1</div>
-                    <div class="flex-grow">
-                        <label class="block text-sm font-medium text-gray-700">Leads (รายชื่อ)</label>
-                        <input type="number" id="trainInputLead" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border bg-gray-100" disabled>
-                    </div>
-                </div>
-
-                <div class="pl-6 flex items-center gap-4 text-sm text-gray-500">
-                    <div class="h-8 w-0.5 bg-gray-300"></div>
-                    <div class="bg-white border px-2 py-1 rounded text-xs flex gap-2 items-center">
-                        Conversion: <input type="number" id="trainRate1" class="w-12 text-center border-b border-indigo-300 focus:outline-none text-indigo-600 font-bold" onchange="validateTraining()"> %
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center font-bold flex-none">2</div>
-                    <div class="flex-grow">
-                        <label class="block text-sm font-medium text-gray-700">Met (เข้าพบ)</label>
-                        <input type="number" id="trainInputMet" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border transition-colors" placeholder="?" onkeyup="validateTraining()">
-                    </div>
-                </div>
-
-                <div class="pl-6 flex items-center gap-4 text-sm text-gray-500">
-                    <div class="h-8 w-0.5 bg-gray-300"></div>
-                    <div class="bg-white border px-2 py-1 rounded text-xs flex gap-2 items-center">
-                        Conversion: <input type="number" id="trainRate2" class="w-12 text-center border-b border-indigo-300 focus:outline-none text-indigo-600 font-bold" onchange="validateTraining()"> %
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-indigo-200 text-indigo-800 flex items-center justify-center font-bold flex-none">3</div>
-                    <div class="flex-grow">
-                        <label class="block text-sm font-medium text-gray-700">Presented (เสนอขาย)</label>
-                        <input type="number" id="trainInputPres" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border transition-colors" placeholder="?" onkeyup="validateTraining()">
-                    </div>
-                </div>
-
-                <div class="pl-6 flex items-center gap-4 text-sm text-gray-500">
-                    <div class="h-8 w-0.5 bg-gray-300"></div>
-                    <div class="bg-white border px-2 py-1 rounded text-xs flex gap-2 items-center">
-                        Conversion: <input type="number" id="trainRate3" class="w-12 text-center border-b border-indigo-300 focus:outline-none text-indigo-600 font-bold" onchange="validateTraining()"> %
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center font-bold flex-none">4</div>
-                    <div class="flex-grow">
-                        <label class="block text-sm font-medium text-gray-700">Closed (ปิดการขาย)</label>
-                        <input type="number" id="trainInputClosed" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border transition-colors" placeholder="?" onkeyup="validateTraining()">
-                    </div>
-                </div>
-
-                <div class="mt-8 border-t pt-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 text-center text-2xl">💰</div>
-                        <div class="flex-grow">
-                            <label class="block text-sm font-medium text-gray-700">Total APE (ยอดรวม)</label>
-                            <input type="text" id="trainInputAPE" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border transition-colors font-bold" placeholder="?" onkeyup="validateTraining()">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="trainingFeedback" class="mt-6 hidden p-4 rounded-lg text-center font-bold"></div>
-        </div>
-
-        <div id="simulator" class="page-section max-w-6xl mx-auto">
-            <header class="mb-6 flex justify-between items-center">
-                <h2 class="text-2xl font-bold text-gray-800">🚀 โหมดใช้งานจริง (Simulator)</h2>
-                <div class="flex gap-2">
-                    <button onclick="simLoad('cisa1')" class="px-3 py-1 bg-gray-100 text-xs rounded hover:bg-gray-200">Ex. CISA1</button>
-                    <button onclick="simLoad('cfsa')" class="px-3 py-1 bg-gray-100 text-xs rounded hover:bg-gray-200">Ex. CFSA</button>
-                </div>
-            </header>
-
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-4 bg-white p-6 rounded-xl shadow-sm border space-y-5">
-                    <div>
-                        <label class="text-xs font-bold text-gray-500 uppercase">1. ตั้งต้น (Inputs)</label>
-                        <div class="mt-2 space-y-3">
-                            <div>
-                                <label class="text-sm text-gray-600">Leads (ราย)</label>
-                                <input type="number" id="simLead" value="25" class="w-full border rounded p-2" oninput="calculateSim()">
+                
+                <div class="lg:col-span-4 space-y-4">
+                    <div class="bg-indigo-900 text-white p-6 rounded-xl shadow-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">🎯</div>
+                        <h3 class="text-indigo-200 text-xs font-bold uppercase tracking-wider mb-4">ข้อมูลโจทย์ (Scenario)</h3>
+                        
+                        <div class="mb-4">
+                            <label class="text-xs text-indigo-300 block">1. เป้าหมาย APE (Issued)</label>
+                            <div class="text-3xl font-bold" id="scen-target">---</div>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-indigo-800 rounded-lg">
+                            <label class="text-xs text-indigo-300 block mb-1">2. ผลงานในอดีต (Performance)</label>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Total APE:</span>
+                                <span class="font-mono" id="scen-past-ape">---</span>
                             </div>
-                            <div>
-                                <label class="text-sm text-gray-600">Ticket Size (บาท)</label>
-                                <input type="number" id="simTicket" value="100000" class="w-full border rounded p-2" oninput="calculateSim()">
+                            <div class="flex justify-between text-sm">
+                                <span>Total Cases:</span>
+                                <span class="font-mono" id="scen-past-count">---</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs text-indigo-300 block">3. คุณภาพงาน (Quality)</label>
+                            <div class="flex justify-between items-end">
+                                <span>Issued Rate:</span>
+                                <span class="text-2xl font-bold text-green-400" id="scen-issue-rate">---%</span>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div>
-                        <label class="text-xs font-bold text-gray-500 uppercase">2. ประสิทธิภาพ (Conversion)</label>
-                        <div class="mt-2 space-y-4">
-                            <div>
-                                <div class="flex justify-between text-sm mb-1"><span>Met Rate</span><span id="txtSimR1" class="text-blue-600 font-bold">60%</span></div>
-                                <input type="range" id="simR1" min="0" max="100" value="60" class="w-full" oninput="calculateSim()">
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-sm mb-1"><span>Offer Rate</span><span id="txtSimR2" class="text-indigo-600 font-bold">80%</span></div>
-                                <input type="range" id="simR2" min="0" max="100" value="80" class="w-full" oninput="calculateSim()">
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-sm mb-1"><span>Close Rate</span><span id="txtSimR3" class="text-green-600 font-bold">50%</span></div>
-                                <input type="range" id="simR3" min="0" max="100" value="50" class="w-full" oninput="calculateSim()">
-                            </div>
-                        </div>
+
+                    <div id="feedback-box" class="hidden bg-white border-l-4 border-yellow-400 p-4 rounded-r-xl shadow-sm">
+                        <h4 class="font-bold text-gray-800 flex items-center gap-2">🤖 AI Coach Analysis</h4>
+                        <p class="text-sm text-gray-600 mt-2 leading-relaxed" id="feedback-text"></p>
                     </div>
                 </div>
 
-                <div class="lg:col-span-8 space-y-4">
-                    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-6 text-white text-center shadow-lg">
-                        <div class="text-sm opacity-75">คาดการณ์ยอดขายรวม (Total APE)</div>
-                        <div class="text-4xl font-bold mt-2" id="simTotalAPE">600,000</div>
-                        <div class="text-sm mt-1">บาท</div>
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <span class="bg-gray-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span> 
+                            คำนวณค่าพื้นฐาน (Foundation)
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Case Size ของคุณ (บาท/ราย)</label>
+                                <input type="number" id="inp-case-size" class="w-full border border-gray-300 rounded-lg p-2.5 transition-colors" placeholder="คำนวณจากผลงานอดีต..." onkeyup="checkPart1()">
+                                <p class="text-xs text-gray-400 mt-1">(Hint: Past APE ÷ Past Cases)</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">เป้าหมาย APE Submitted (บาท)</label>
+                                <input type="number" id="inp-ape-submit" class="w-full border border-gray-300 rounded-lg p-2.5 transition-colors" placeholder="ต้องส่งงานเท่าไหร่..." onkeyup="checkPart1()">
+                                <p class="text-xs text-gray-400 mt-1">(Hint: Target ÷ Issued Rate)</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-sm border p-6 space-y-4">
-                        <div class="flex items-center text-sm">
-                            <div class="w-24 font-bold text-gray-500">Leads</div>
-                            <div class="flex-grow bg-gray-100 rounded-full h-8 overflow-hidden relative">
-                                <div class="bg-blue-300 h-full flex items-center px-3 text-blue-900 font-bold w-full">
-                                    <span id="simCountLead">25</span>
+                    <div id="part2-container" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 opacity-50 pointer-events-none transition-opacity">
+                        <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <span class="bg-gray-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span> 
+                            วางแผน Funnel (Reverse Engineering)
+                        </h3>
+                        <p class="text-sm text-gray-500 mb-4">จงระบุจำนวนคนในแต่ละขั้นตอน และกำหนด Conversion Rate ให้สอดคล้องกับความเป็นจริง</p>
+
+                        <div class="space-y-4">
+                            
+                            <div class="flex items-center gap-3">
+                                <div class="w-24 text-right text-sm font-bold text-green-600">ปิดการขาย</div>
+                                <input type="number" id="f-closed" class="w-24 border rounded p-2 text-center font-bold" placeholder="ราย" onkeyup="checkPart2()">
+                                <span class="text-sm text-gray-400">ราย (คำนวณจาก APE Submit ÷ Case Size)</span>
+                            </div>
+
+                            <div class="flex items-center gap-3 pl-24 py-1">
+                                <div class="h-6 w-0.5 bg-gray-300"></div>
+                                <div class="text-xs bg-gray-100 px-2 py-1 rounded border flex gap-2 items-center">
+                                    Closing Rate %: <input type="number" id="r-close" value="50" class="w-10 bg-transparent text-center border-b border-gray-400 focus:outline-none font-bold text-indigo-600" onchange="checkPart2()">
                                 </div>
                             </div>
-                        </div>
-                        <div class="flex items-center text-sm">
-                            <div class="w-24 font-bold text-gray-500">Met</div>
-                            <div class="flex-grow bg-gray-100 rounded-full h-8 overflow-hidden relative">
-                                <div id="barSimMet" class="bg-blue-400 h-full flex items-center px-3 text-blue-900 font-bold transition-all duration-500" style="width: 60%">
-                                    <span id="simCountMet">15</span>
+
+                            <div class="flex items-center gap-3">
+                                <div class="w-24 text-right text-sm font-bold text-gray-700">เข้าพบ/เสนอ</div>
+                                <input type="number" id="f-present" class="w-24 border rounded p-2 text-center" placeholder="ราย" onkeyup="checkPart2()">
+                            </div>
+
+                             <div class="flex items-center gap-3 pl-24 py-1">
+                                <div class="h-6 w-0.5 bg-gray-300"></div>
+                                <div class="text-xs bg-gray-100 px-2 py-1 rounded border flex gap-2 items-center">
+                                    Show Up Rate %: <input type="number" id="r-show" value="70" class="w-10 bg-transparent text-center border-b border-gray-400 focus:outline-none font-bold text-indigo-600" onchange="checkPart2()">
                                 </div>
                             </div>
-                        </div>
-                        <div class="flex items-center text-sm">
-                            <div class="w-24 font-bold text-gray-500">Offer</div>
-                            <div class="flex-grow bg-gray-100 rounded-full h-8 overflow-hidden relative">
-                                <div id="barSimOffer" class="bg-indigo-400 h-full flex items-center px-3 text-white font-bold transition-all duration-500" style="width: 48%">
-                                    <span id="simCountOffer">12</span>
+
+                            <div class="flex items-center gap-3">
+                                <div class="w-24 text-right text-sm font-bold text-gray-700">นัดหมายได้</div>
+                                <input type="number" id="f-met" class="w-24 border rounded p-2 text-center" placeholder="ราย" onkeyup="checkPart2()">
+                            </div>
+
+                            <div class="flex items-center gap-3 pl-24 py-1">
+                                <div class="h-6 w-0.5 bg-gray-300"></div>
+                                <div class="text-xs bg-gray-100 px-2 py-1 rounded border flex gap-2 items-center">
+                                    Appt Rate %: <input type="number" id="r-appt" value="30" class="w-10 bg-transparent text-center border-b border-gray-400 focus:outline-none font-bold text-indigo-600" onchange="checkPart2()">
                                 </div>
                             </div>
-                        </div>
-                        <div class="flex items-center text-sm">
-                            <div class="w-24 font-bold text-green-600">Closed</div>
-                            <div class="flex-grow bg-gray-100 rounded-full h-8 overflow-hidden relative border border-green-200">
-                                <div id="barSimClosed" class="bg-green-500 h-full flex items-center px-3 text-white font-bold transition-all duration-500" style="width: 24%">
-                                    <span id="simCountClosed">6</span>
+
+                            <div class="flex items-center gap-3">
+                                <div class="w-24 text-right text-sm font-bold text-gray-700">โทร/ติดต่อ</div>
+                                <input type="number" id="f-call" class="w-24 border rounded p-2 text-center" placeholder="สาย" onkeyup="checkPart2()">
+                            </div>
+
+                             <div class="flex items-center gap-3 pl-24 py-1">
+                                <div class="h-6 w-0.5 bg-gray-300"></div>
+                                <div class="text-xs bg-gray-100 px-2 py-1 rounded border flex gap-2 items-center">
+                                    Contact Rate %: <input type="number" id="r-contact" value="50" class="w-10 bg-transparent text-center border-b border-gray-400 focus:outline-none font-bold text-indigo-600" onchange="checkPart2()">
                                 </div>
                             </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="w-24 text-right text-sm font-bold text-gray-700">รายชื่อ (Lead)</div>
+                                <input type="number" id="f-lead" class="w-24 border rounded p-2 text-center bg-blue-50" placeholder="ราย" onkeyup="checkPart2()">
+                                <span class="text-xs text-blue-600" id="lead-suggestion"></span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -345,220 +229,191 @@
 
     </main>
 
-    <nav class="bg-white border-t border-gray-200 md:hidden flex justify-around py-3 z-20">
-        <button onclick="navigateTo('home')" class="flex flex-col items-center text-xs text-gray-500 hover:text-indigo-600 nav-btn" data-target="home">
-            <span class="text-xl">🏠</span> Home
-        </button>
-        <button onclick="navigateTo('learning')" class="flex flex-col items-center text-xs text-gray-500 hover:text-indigo-600 nav-btn" data-target="learning">
-            <span class="text-xl">📚</span> Learn
-        </button>
-        <button onclick="navigateTo('training')" class="flex flex-col items-center text-xs text-gray-500 hover:text-indigo-600 nav-btn" data-target="training">
-            <span class="text-xl">🏋️</span> Train
-        </button>
-        <button onclick="navigateTo('simulator')" class="flex flex-col items-center text-xs text-gray-500 hover:text-indigo-600 nav-btn" data-target="simulator">
-            <span class="text-xl">🚀</span> Sim
-        </button>
-    </nav>
-
-    <div id="helpModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl max-w-sm w-full p-6 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4">📖 คู่มือการใช้งาน</h3>
-            <ul class="space-y-3 text-sm text-gray-600 mb-6">
-                <li><strong>1. Learning:</strong> อ่านทำความเข้าใจศัพท์ กดที่แถบเพื่อดูรายละเอียด</li>
-                <li><strong>2. Training:</strong> ระบบจะให้โจทย์มา (สีน้ำเงินเข้ม) ให้คุณลองคำนวณและกรอกตัวเลขลงในช่องว่าง หากถูกจะเป็นสีเขียว</li>
-                <li><strong>3. Simulator:</strong> ใช้สำหรับวางแผนงานจริง ปรับ Slider เพื่อดูเป้าหมาย</li>
-            </ul>
-            <button onclick="toggleHelp()" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-bold">เข้าใจแล้ว</button>
-        </div>
-    </div>
-
     <script>
-        // --- Navigation System ---
+        // State Management
+        let scenario = {};
+        let part1Solved = false;
+
         function navigateTo(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            // Show target page
             document.getElementById(pageId).classList.add('active');
-            
-            // Update Mobile Nav Active State
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-indigo-600', 'font-bold');
-                if(btn.dataset.target === pageId) btn.classList.add('text-indigo-600', 'font-bold');
-            });
-
-            // Initialize page specific logic
-            if(pageId === 'training') generateScenario();
-            if(pageId === 'simulator') calculateSim();
+            if(pageId === 'training' && !scenario.targetAPE) generateScenario();
         }
-
-        function toggleHelp() {
-            const modal = document.getElementById('helpModal');
-            modal.classList.toggle('hidden');
-        }
-
-        // --- Learning Module ---
-        function toggleAccordion(id) {
-            const el = document.getElementById(id);
-            if (el.classList.contains('hidden')) {
-                el.classList.remove('hidden');
-            } else {
-                el.classList.add('hidden');
-            }
-        }
-
-        // --- Training Module ---
-        let trainState = { leads: 0, ticket: 0, r1: 0, r2: 0, r3: 0 };
 
         function generateScenario() {
-            // Randomize Inputs
-            trainState.leads = Math.floor(Math.random() * 40) + 10; // 10-50
-            trainState.ticket = Math.round((Math.random() * 200000 + 50000) / 10000) * 10000; // 50k - 250k
-            
-            // Randomize Rates (Easy Numbers: 10, 20... 90)
-            trainState.r1 = Math.floor(Math.random() * 5 + 4) * 10; // 40-90%
-            trainState.r2 = Math.floor(Math.random() * 4 + 5) * 10; // 50-90%
-            trainState.r3 = Math.floor(Math.random() * 5 + 3) * 10; // 30-80%
+            // Random Logic
+            const target = Math.round((Math.random() * 500000 + 100000) / 10000) * 10000; // 100k - 600k
+            const caseCount = Math.floor(Math.random() * 20) + 10; // 10 - 30 cases
+            const avgCaseSize = Math.round((Math.random() * 40000 + 20000) / 1000) * 1000; // 20k - 60k
+            const pastAPE = avgCaseSize * caseCount;
+            const issuedRate = Math.floor(Math.random() * 4 + 6) * 10; // 60, 70, 80, 90%
 
-            // Update UI
-            document.getElementById('trainInputLead').value = trainState.leads;
-            document.getElementById('trainRate1').value = trainState.r1;
-            document.getElementById('trainRate2').value = trainState.r2;
-            document.getElementById('trainRate3').value = trainState.r3;
+            scenario = {
+                target: target,
+                pastAPE: pastAPE,
+                pastCount: caseCount,
+                avgCaseSize: avgCaseSize,
+                issuedRate: issuedRate,
+                apeSubmit: Math.round(target / (issuedRate/100))
+            };
 
-            document.getElementById('scen-lead').innerText = `Leads: ${trainState.leads}`;
-            document.getElementById('scen-ticket').innerText = `Ticket: ${trainState.ticket.toLocaleString()}`;
-            
-            document.getElementById('scenarioText').innerHTML = 
-                `"เรามี Lead <b>${trainState.leads} คน</b>, ตั๋วเฉลี่ย <b>${(trainState.ticket/1000)}k</b>. <br>ถ้า Conversion เป็นตามด้านล่าง... เราจะได้ APE เท่าไหร่?"`;
+            // Render UI
+            document.getElementById('scen-target').innerText = scenario.target.toLocaleString();
+            document.getElementById('scen-past-ape').innerText = scenario.pastAPE.toLocaleString();
+            document.getElementById('scen-past-count').innerText = scenario.pastCount + " ราย";
+            document.getElementById('scen-issue-rate').innerText = scenario.issuedRate + "%";
 
-            // Clear Inputs
-            ['trainInputMet', 'trainInputPres', 'trainInputClosed', 'trainInputAPE'].forEach(id => {
-                const el = document.getElementById(id);
-                el.value = '';
-                el.classList.remove('input-correct', 'input-wrong');
-            });
-            document.getElementById('trainingFeedback').classList.add('hidden');
+            // Reset Fields
+            resetInputs();
         }
 
-        function validateTraining() {
-            const iLead = parseInt(document.getElementById('trainInputLead').value);
-            const r1 = parseInt(document.getElementById('trainRate1').value);
-            const r2 = parseInt(document.getElementById('trainRate2').value);
-            const r3 = parseInt(document.getElementById('trainRate3').value);
+        function resetInputs() {
+            document.querySelectorAll('input').forEach(i => {
+                if(!i.id.startsWith('r-')) { // Don't reset rates
+                    i.value = '';
+                    i.classList.remove('valid-field', 'invalid-field');
+                }
+            });
+            document.getElementById('part2-container').classList.add('opacity-50', 'pointer-events-none');
+            document.getElementById('feedback-box').classList.add('hidden');
+            part1Solved = false;
+        }
 
-            // Calculate Answers
-            const ansMet = Math.round(iLead * (r1/100));
-            const ansPres = Math.round(ansMet * (r2/100));
-            const ansClosed = Math.round(ansPres * (r3/100));
-            const ansAPE = ansClosed * trainState.ticket;
+        function checkPart1() {
+            const userSize = parseFloat(document.getElementById('inp-case-size').value);
+            const userSubmit = parseFloat(document.getElementById('inp-ape-submit').value);
+            
+            let sizeCorrect = false;
+            let submitCorrect = false;
 
-            // Check User Inputs
-            checkField('trainInputMet', ansMet);
-            checkField('trainInputPres', ansPres);
-            checkField('trainInputClosed', ansClosed);
-            
-            // Check APE (Allow comma format)
-            const inputAPE = document.getElementById('trainInputAPE');
-            const valAPE = parseInt(inputAPE.value.replace(/,/g, '')) || 0;
-            
-            if(inputAPE.value !== '') {
-                if(valAPE === ansAPE) {
-                    inputAPE.classList.add('input-correct');
-                    inputAPE.classList.remove('input-wrong');
+            // Check Case Size (Allow 5% margin due to rounding user might do)
+            if(userSize) {
+                const el = document.getElementById('inp-case-size');
+                if(Math.abs(userSize - scenario.avgCaseSize) < 1000) {
+                    el.classList.add('valid-field');
+                    el.classList.remove('invalid-field');
+                    sizeCorrect = true;
                 } else {
-                    inputAPE.classList.add('input-wrong');
-                    inputAPE.classList.remove('input-correct');
+                    el.classList.add('invalid-field');
+                    el.classList.remove('valid-field');
                 }
             }
 
-            // Success Message
-            const allCorrect = 
-                document.getElementById('trainInputMet').classList.contains('input-correct') &&
-                document.getElementById('trainInputPres').classList.contains('input-correct') &&
-                document.getElementById('trainInputClosed').classList.contains('input-correct') &&
-                inputAPE.classList.contains('input-correct');
+            // Check APE Submit
+            if(userSubmit) {
+                const el = document.getElementById('inp-ape-submit');
+                // Allow small error margin
+                if(Math.abs(userSubmit - scenario.apeSubmit) < 5000) {
+                    el.classList.add('valid-field');
+                    el.classList.remove('invalid-field');
+                    submitCorrect = true;
+                } else {
+                    el.classList.add('invalid-field');
+                    el.classList.remove('valid-field');
+                }
+            }
 
-            const fb = document.getElementById('trainingFeedback');
-            if(allCorrect) {
-                fb.classList.remove('hidden');
-                fb.className = "mt-6 p-4 rounded-lg text-center font-bold bg-green-100 text-green-700 animate-bounce";
-                fb.innerHTML = "🎉 สุดยอด! คุณคำนวณถูกต้องทั้งหมด!";
-            } else {
-                fb.classList.add('hidden');
+            if(sizeCorrect && submitCorrect) {
+                part1Solved = true;
+                document.getElementById('part2-container').classList.remove('opacity-50', 'pointer-events-none');
             }
         }
 
-        function checkField(id, correctVal) {
+        function checkPart2() {
+            if(!part1Solved) return;
+
+            // Get Values
+            const nClose = parseInt(document.getElementById('f-closed').value) || 0;
+            const nPres = parseInt(document.getElementById('f-present').value) || 0;
+            const nMet = parseInt(document.getElementById('f-met').value) || 0;
+            const nCall = parseInt(document.getElementById('f-call').value) || 0;
+            const nLead = parseInt(document.getElementById('f-lead').value) || 0;
+
+            const rClose = parseInt(document.getElementById('r-close').value) / 100;
+            const rShow = parseInt(document.getElementById('r-show').value) / 100;
+            const rAppt = parseInt(document.getElementById('r-appt').value) / 100;
+            const rContact = parseInt(document.getElementById('r-contact').value) / 100;
+
+            // 1. Validate Target Volume (Closed Cases vs APE Submit)
+            const requiredCases = Math.ceil(scenario.apeSubmit / scenario.avgCaseSize);
+            validateField('f-closed', nClose >= requiredCases);
+
+            // 2. Validate Step Math (Forward Check with tolerance)
+            // Present -> Closed
+            const expectedClosed = Math.round(nPres * rClose);
+            validateField('f-present', Math.abs(nClose - expectedClosed) <= 1 && nPres > 0);
+
+            // Met -> Present
+            const expectedPres = Math.round(nMet * rShow);
+            validateField('f-met', Math.abs(nPres - expectedPres) <= 1 && nMet > 0);
+
+            // Call -> Met
+            const expectedMet = Math.round(nCall * rAppt);
+            validateField('f-call', Math.abs(nMet - expectedMet) <= 1 && nCall > 0);
+
+            // Lead -> Call
+            const expectedCall = Math.round(nLead * rContact);
+            validateField('f-lead', Math.abs(nCall - expectedCall) <= 2 && nLead > 0);
+
+            // 3. AI Coach Feedback
+            generateFeedback(nLead, nClose, {rClose, rShow, rAppt, rContact});
+        }
+
+        function validateField(id, condition) {
             const el = document.getElementById(id);
             if(el.value === '') {
-                el.classList.remove('input-correct', 'input-wrong');
+                el.classList.remove('valid-field', 'invalid-field');
                 return;
             }
-            if(parseInt(el.value) === correctVal) {
-                el.classList.add('input-correct');
-                el.classList.remove('input-wrong');
+            if(condition) {
+                el.classList.add('valid-field');
+                el.classList.remove('invalid-field');
             } else {
-                el.classList.add('input-wrong');
-                el.classList.remove('input-correct');
+                el.classList.add('invalid-field');
+                el.classList.remove('valid-field');
             }
         }
 
-
-        // --- Simulator Module ---
-        function calculateSim() {
-            const leads = parseInt(document.getElementById('simLead').value) || 0;
-            const ticket = parseInt(document.getElementById('simTicket').value) || 0;
-            const r1 = parseInt(document.getElementById('simR1').value);
-            const r2 = parseInt(document.getElementById('simR2').value);
-            const r3 = parseInt(document.getElementById('simR3').value);
-
-            // Update Labels
-            document.getElementById('txtSimR1').innerText = r1 + '%';
-            document.getElementById('txtSimR2').innerText = r2 + '%';
-            document.getElementById('txtSimR3').innerText = r3 + '%';
-
-            // Calculations
-            const met = Math.round(leads * (r1/100));
-            const offer = Math.round(met * (r2/100));
-            const closed = Math.round(offer * (r3/100));
-            const ape = closed * ticket;
-
-            // Display
-            document.getElementById('simCountLead').innerText = leads;
-            document.getElementById('simCountMet').innerText = met;
-            document.getElementById('simCountOffer').innerText = offer;
-            document.getElementById('simCountClosed').innerText = closed;
-            document.getElementById('simTotalAPE').innerText = ape.toLocaleString();
-
-            // Bars
-            const wMet = leads > 0 ? (met/leads)*100 : 0;
-            const wOffer = leads > 0 ? (offer/leads)*100 : 0;
-            const wClosed = leads > 0 ? (closed/leads)*100 : 0;
-
-            document.getElementById('barSimMet').style.width = Math.max(wMet, 5) + '%';
-            document.getElementById('barSimOffer').style.width = Math.max(wOffer, 5) + '%';
-            document.getElementById('barSimClosed').style.width = Math.max(wClosed, 5) + '%';
-        }
-
-        function simLoad(preset) {
-            if(preset === 'cisa1') {
-                document.getElementById('simLead').value = 25;
-                document.getElementById('simTicket').value = 100000;
-                document.getElementById('simR1').value = 60;
-                document.getElementById('simR2').value = 80;
-                document.getElementById('simR3').value = 50;
-            } else if (preset === 'cfsa') {
-                document.getElementById('simLead').value = 12;
-                document.getElementById('simTicket').value = 300000;
-                document.getElementById('simR1').value = 80;
-                document.getElementById('simR2').value = 80;
-                document.getElementById('simR3').value = 80;
+        function generateFeedback(leads, closed, rates) {
+            const box = document.getElementById('feedback-box');
+            const txt = document.getElementById('feedback-text');
+            
+            if(leads === 0 || closed === 0) {
+                box.classList.add('hidden');
+                return;
             }
-            calculateSim();
+            box.classList.remove('hidden');
+
+            // Find Weakest Link
+            let ratesArr = [
+                {name: "Contact Rate", val: rates.rContact},
+                {name: "Appt Rate", val: rates.rAppt},
+                {name: "Show Up Rate", val: rates.rShow},
+                {name: "Closing Rate", val: rates.rClose}
+            ];
+            ratesArr.sort((a,b) => a.val - b.val);
+            let weakest = ratesArr[0];
+
+            // Calculate hypothetical savings
+            // If we improve weakest by 10% absolute (e.g. 0.3 -> 0.4)
+            // Current Funnel Efficiency = r1*r2*r3*r4
+            let currentEff = rates.rContact * rates.rAppt * rates.rShow * rates.rClose;
+            
+            // New Efficiency
+            let newEff = currentEff * ((weakest.val + 0.1) / weakest.val);
+            let neededLeadsCurrent = closed / currentEff;
+            let neededLeadsNew = closed / newEff;
+            let savedLeads = Math.round(neededLeadsCurrent - neededLeadsNew);
+
+            txt.innerHTML = `
+                จุดอ่อนของคุณคือ <b>${weakest.name}</b> (${(weakest.val*100).toFixed(0)}%)<br>
+                💡 หากคุณพัฒนาจุดนี้เพิ่มขึ้นอีก 10% (เป็น ${(weakest.val*100 + 10).toFixed(0)}%) <br>
+                คุณจะหา Lead ลดลงได้ประมาณ <b class="text-green-600">${savedLeads} ราย</b> เพื่อให้ได้ยอดขายเท่าเดิม!
+            `;
         }
 
         // Init
-        // Start at Home
+        // generateScenario(); // Call on load if needed
     </script>
 </body>
 </html>
