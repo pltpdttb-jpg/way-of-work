@@ -3,331 +3,437 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Funnel Simulator & Learning System</title>
+    <title>PRU ACADEMY - Sales Master System</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         body { font-family: 'Prompt', sans-serif; }
-        .slider-thumb::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #4F46E5;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-        .funnel-bar { transition: all 0.5s ease-in-out; }
+        .hidden-section { display: none; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* Custom Red for PRU style */
+        .bg-pru-red { background-color: #ED1B24; }
+        .text-pru-red { color: #ED1B24; }
+        .border-pru-red { border-color: #ED1B24; }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen p-4 md:p-8">
+<body class="bg-gray-50 flex flex-col min-h-screen">
 
-    <div class="max-w-6xl mx-auto">
-        <header class="mb-8 text-center md:text-left">
-            <h1 class="text-3xl md:text-4xl font-bold text-indigo-900">🎯 ระบบจำลองผลลัพธ์การขาย (Sales Simulator)</h1>
-            <p class="text-gray-600 mt-2">เรียนรู้ความสัมพันธ์ของตัวเลข: ลองปรับเปลี่ยนค่า Conversion Rate เพื่อดูผลกระทบต่อยอดขาย APE</p>
-        </header>
+    <section id="screen-welcome" class="flex-grow flex flex-col items-center justify-center bg-white fade-in relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-32 h-32 bg-red-50 rounded-br-full opacity-50"></div>
+        <div class="absolute bottom-0 right-0 w-48 h-48 bg-gray-50 rounded-tl-full opacity-50"></div>
 
-        <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
-            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">⚡ โหลดสถานการณ์ตัวอย่าง (จากเอกสารจริง)</h3>
-            <div class="flex flex-wrap gap-3">
-                <button onclick="loadScenario('cisa1')" class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition text-sm font-medium">
-                    👤 CISA 1 (นาย A) - เน้นปริมาณ
-                </button>
-                <button onclick="loadScenario('cisa2')" class="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition text-sm font-medium">
-                    👤 CISA 2 (นาย B) - เน้นเคสใหญ่
-                </button>
-                <button onclick="loadScenario('cfsa')" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition text-sm font-medium">
-                    👤 CFSA (จุ๊บจิ๊บ) - ประสิทธิภาพสูง
-                </button>
-                <button onclick="resetDefault()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm font-medium">
-                    🔄 รีเซ็ตค่าเริ่มต้น
-                </button>
+        <div class="text-center z-10 px-6">
+            <div class="mb-6">
+                <h1 class="text-5xl md:text-6xl font-bold tracking-tighter text-gray-800">
+                    PRU <span class="text-pru-red">ACADEMY</span>
+                </h1>
+                <p class="text-gray-500 mt-2 text-lg tracking-widest">SALES EXCELLENCE SYSTEM</p>
             </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            <div class="lg:col-span-5 space-y-6">
-                
-                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-indigo-500">
-                    <h2 class="text-xl font-bold text-gray-800 mb-4">🎛️ ปรับตัวแปรต้น (Inputs)</h2>
-                    
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-medium mb-1">จำนวนรายชื่อมุ่งหวัง (Leads)</label>
-                        <div class="flex items-center gap-3">
-                            <input type="number" id="inputLead" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" value="25">
-                            <span class="text-gray-500 text-sm w-12">ราย</span>
+            <div class="space-y-4">
+                <p class="text-gray-600 mb-8 max-w-md mx-auto">
+                    ยินดีต้อนรับเข้าสู่ระบบฝึกฝนทักษะการคำนวณและวางแผนการขายสำหรับมืออาชีพ
+                </p>
+                <button onclick="navigateTo('screen-menu')" class="px-8 py-3 bg-pru-red text-white text-xl font-bold rounded-full shadow-lg hover:bg-red-700 transition transform hover:scale-105">
+                    เข้าสู่ระบบ <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="screen-menu" class="hidden-section flex-grow flex flex-col items-center justify-center bg-gray-50 fade-in py-10">
+        <div class="max-w-4xl w-full px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">เลือกโหมดการใช้งาน</h2>
+                <p class="text-gray-500">Select your mode</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div onclick="startTrainingMode()" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer border-l-8 border-blue-500 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-500 transition">
+                            <i class="fas fa-calculator text-2xl text-blue-600 group-hover:text-white"></i>
                         </div>
+                        <span class="text-xs font-bold text-gray-400">PART 1</span>
                     </div>
-
-                    <div class="mb-8">
-                        <label class="block text-gray-700 font-medium mb-1">เบี้ยประกันเฉลี่ยต่อเคส (Ticket Size)</label>
-                        <div class="flex items-center gap-3">
-                            <input type="number" id="inputTicket" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" value="100000">
-                            <span class="text-gray-500 text-sm w-12">บาท</span>
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-200 my-4">
-
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <label class="text-sm font-medium text-gray-600">Step 1 → 2: อัตราการนัดพบ (Lead to Met)</label>
-                                <span class="text-indigo-600 font-bold" id="valRate1">60%</span>
-                            </div>
-                            <input type="range" id="rangeRate1" min="0" max="100" value="60" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <label class="text-sm font-medium text-gray-600">Step 2 → 3: อัตราการนำเสนอ (Met to Presented)</label>
-                                <span class="text-indigo-600 font-bold" id="valRate2">80%</span>
-                            </div>
-                            <input type="range" id="rangeRate2" min="0" max="100" value="80" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <label class="text-sm font-medium text-gray-600">Step 3 → 4: อัตราการปิดการขาย (Closing Ratio)</label>
-                                <span class="text-indigo-600 font-bold" id="valRate3">50%</span>
-                            </div>
-                            <input type="range" id="rangeRate3" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                        </div>
-                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">ฝึกฝนการคำนวณ (Drill Mode)</h3>
+                    <p class="text-gray-500 text-sm">ทดสอบความแม่นยำในการคำนวณ APE Submit และวิเคราะห์ Conversion Rate จากตัวเลขสมมติ</p>
                 </div>
-                
-                <div class="bg-yellow-50 rounded-xl p-4 border border-yellow-200">
-                    <h4 class="font-bold text-yellow-800 mb-2">💡 ข้อคิดสำหรับเรียนรู้:</h4>
-                    <p class="text-sm text-yellow-800 leading-relaxed" id="learningTip">
-                        ลองเพิ่ม "อัตราการปิดการขาย" ขึ้นเพียง 10% แล้วสังเกตยอด APE รวมดูสิครับ การพัฒนาทักษะปิดการขายอาจให้ผลลัพธ์มหาศาลกว่าการหาลูกค้าใหม่
-                    </p>
+
+                <div onclick="navigateTo('screen-planning')" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer border-l-8 border-pru-red group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-red-100 rounded-lg group-hover:bg-pru-red transition">
+                            <i class="fas fa-chart-line text-2xl text-pru-red group-hover:text-white"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-400">PART 2</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">วางแผนการขายจริง (Planning)</h3>
+                    <p class="text-gray-500 text-sm">ระบบช่วยวางแผนย้อนกลับ หาจำนวน Lead ที่ต้องใช้ พร้อม AI วิเคราะห์จุดอ่อนที่ต้องพัฒนา</p>
                 </div>
             </div>
 
-            <div class="lg:col-span-7 space-y-6">
-                
-                <div class="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-xl shadow-lg p-6 text-white text-center">
-                    <h3 class="text-lg opacity-90 font-light mb-1">ยอดผลงานรวมที่คาดการณ์ (Total APE)</h3>
-                    <div class="text-4xl md:text-5xl font-bold tracking-tight" id="displayAPE">600,000</div>
-                    <div class="text-sm opacity-80 mt-2">บาท (THB)</div>
+            <div class="mt-12 text-center">
+                <button onclick="navigateTo('screen-welcome')" class="text-gray-400 hover:text-gray-600 underline">กลับหน้าหลัก</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="screen-training" class="hidden-section flex-grow bg-gray-50 py-8 px-4 fade-in">
+        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-blue-600 p-6 text-white flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold"><i class="fas fa-dumbbell mr-2"></i> Training Drill</h2>
+                    <p class="text-blue-100 text-sm">ฝึกคำนวณ APE และบันทึกสถิติ</p>
+                </div>
+                <button onclick="navigateTo('screen-menu')" class="text-blue-200 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            </div>
+
+            <div class="p-6">
+                <div class="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                    <h3 class="font-bold text-blue-800 mb-4 text-lg">📝 โจทย์ของคุณ (แก้ไขไม่ได้)</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">เป้าหมาย APE (Issue)</div>
+                            <div class="text-xl font-bold text-gray-800" id="tr-target-ape">0</div>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">Issue Rate (อนุมัติ)</div>
+                            <div class="text-xl font-bold text-blue-600" id="tr-issue-rate">0%</div>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">Total APE เดิม</div>
+                            <div class="text-gray-600" id="tr-hist-ape">-</div>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">Total Case เดิม</div>
+                            <div class="text-gray-600" id="tr-hist-case">-</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-6">📊 Sales Funnel Visualization</h3>
+                <div id="training-step-calc" class="mb-8">
+                    <label class="block text-gray-700 font-bold mb-2">🎯 ภารกิจที่ 1: กรอกยอด APE Submit ที่ต้องทำให้ได้</label>
+                    <p class="text-sm text-gray-500 mb-3">(ใบ้: ต้องส่งงานเท่าไหร่ เมื่อคูณกับ Issue Rate แล้วจะได้เท่ากับเป้าหมาย?)</p>
                     
-                    <div class="space-y-4">
-                        <div class="relative">
-                            <div class="flex justify-between text-xs text-gray-500 mb-1">
-                                <span>STEP 1: LEADS</span>
-                                <span class="font-bold text-gray-700"><span id="countLead">25</span> ราย</span>
-                            </div>
-                            <div class="w-full bg-gray-100 rounded-full h-10 overflow-hidden relative">
-                                <div id="barLead" class="funnel-bar h-full bg-blue-200 flex items-center pl-3 text-blue-800 font-bold" style="width: 100%;">
-                                    100%
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <div class="flex justify-between text-xs text-gray-500 mb-1">
-                                <span>STEP 2: MET (ได้พบ)</span>
-                                <span class="font-bold text-gray-700"><span id="countMet">15</span> ราย</span>
-                            </div>
-                            <div class="w-full bg-gray-100 rounded-full h-10 overflow-hidden relative">
-                                <div id="barMet" class="funnel-bar h-full bg-blue-300 flex items-center pl-3 text-blue-900 font-bold" style="width: 60%;">
-                                    <span id="txtRate1">60%</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <div class="flex justify-between text-xs text-gray-500 mb-1">
-                                <span>STEP 3: PRESENTED (นำเสนอ)</span>
-                                <span class="font-bold text-gray-700"><span id="countPresented">12</span> ราย</span>
-                            </div>
-                            <div class="w-full bg-gray-100 rounded-full h-10 overflow-hidden relative">
-                                <div id="barPresented" class="funnel-bar h-full bg-indigo-400 flex items-center pl-3 text-white font-bold" style="width: 48%;">
-                                    <span id="txtRate2">80%</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <div class="flex justify-between text-xs text-gray-500 mb-1">
-                                <span>STEP 4: CLOSED (ปิดการขาย)</span>
-                                <span class="font-bold text-green-600 text-lg"><span id="countClosed">6</span> ราย</span>
-                            </div>
-                            <div class="w-full bg-gray-100 rounded-full h-12 overflow-hidden relative border-2 border-green-100">
-                                <div id="barClosed" class="funnel-bar h-full bg-green-500 flex items-center pl-3 text-white font-bold" style="width: 24%;">
-                                    <span id="txtRate3">50%</span> 
-                                </div>
-                            </div>
-                        </div>
+                    <div class="flex gap-3 max-w-md">
+                        <input type="number" id="inp-user-submit" placeholder="ใส่ตัวเลข APE Submit" class="flex-1 border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none">
+                        <button onclick="checkTrainingAnswer()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700">ตรวจสอบ</button>
                     </div>
+                    <p id="calc-feedback" class="mt-2 font-bold hidden"></p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 text-center">
-                        <div class="text-xs text-gray-500 uppercase">Conversion รวม</div>
-                        <div class="text-xl font-bold text-gray-800" id="totalConversion">24%</div>
-                        <div class="text-xs text-gray-400">จาก Lead สู่ยอดขาย</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 text-center">
-                        <div class="text-xs text-gray-500 uppercase">มูลค่าต่อ Lead</div>
-                        <div class="text-xl font-bold text-green-600" id="valuePerLead">24,000</div>
-                        <div class="text-xs text-gray-400">บาท (APE / Leads)</div>
+                <div id="training-step-funnel" class="hidden-section border-t pt-8">
+                    <h3 class="font-bold text-gray-800 mb-4">📊 ภารกิจที่ 2: บันทึกกิจกรรมการขาย (Funnel)</h3>
+                    <p class="text-sm text-gray-500 mb-6">กรอกตัวเลขกิจกรรมจริง ระบบจะคำนวณ % Conversion ให้</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase">1. จำนวนรายชื่อ (Leads)</label>
+                                <input type="number" id="tr-lead" class="w-full border rounded px-3 py-2 bg-gray-50" placeholder="0" oninput="calcTrainingFunnel()">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase">2. จำนวนการโทร (Calls)</label>
+                                <input type="number" id="tr-call" class="w-full border rounded px-3 py-2 bg-gray-50" placeholder="0" oninput="calcTrainingFunnel()">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase">3. นัดหมายได้ (Appt/Met)</label>
+                                <input type="number" id="tr-appt" class="w-full border rounded px-3 py-2 bg-gray-50" placeholder="0" oninput="calcTrainingFunnel()">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase">4. เข้าพบ/นำเสนอ (Presented)</label>
+                                <input type="number" id="tr-present" class="w-full border rounded px-3 py-2 bg-gray-50" placeholder="0" oninput="calcTrainingFunnel()">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase">5. ปิดการขายสำเร็จ (Closed)</label>
+                                <input type="number" id="tr-close" class="w-full border rounded px-3 py-2 bg-green-50 border-green-200" placeholder="0" oninput="calcTrainingFunnel()">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase">6. Case Size เฉลี่ย (บาท)</label>
+                                <input type="number" id="tr-casesize" class="w-full border rounded px-3 py-2" placeholder="เช่น 25000" oninput="calcTrainingFunnel()">
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 text-white rounded-xl p-5 shadow-inner">
+                            <h4 class="text-center font-bold text-yellow-400 mb-4">ผลลัพธ์ประสิทธิภาพ</h4>
+                            
+                            <div class="space-y-4 text-sm">
+                                <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                                    <span>Call Rate (Lead→Call)</span>
+                                    <span id="res-rate-1" class="font-bold text-yellow-300">0%</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                                    <span>Appt Rate (Call→Appt)</span>
+                                    <span id="res-rate-2" class="font-bold text-yellow-300">0%</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                                    <span>Show Rate (Appt→Present)</span>
+                                    <span id="res-rate-3" class="font-bold text-yellow-300">0%</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                                    <span>Closing Rate (Present→Close)</span>
+                                    <span id="res-rate-4" class="font-bold text-green-400">0%</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 text-center">
+                                <div class="text-gray-400 text-xs uppercase">Total APE ที่ทำได้</div>
+                                <div class="text-3xl font-bold text-white" id="res-final-ape">0</div>
+                                <div class="text-xs text-gray-400">บาท</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
-        
-        <footer class="mt-12 text-center text-gray-400 text-sm pb-8">
-            <p>ระบบจำลอง Sales Funnel เพื่อการเรียนรู้ | สร้างจากเอกสาร Sales Activity</p>
-        </footer>
-    </div>
+    </section>
+
+    <section id="screen-planning" class="hidden-section flex-grow bg-gray-50 py-8 px-4 fade-in">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-pru-red p-6 text-white flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold"><i class="fas fa-compass mr-2"></i> Planning Tool</h2>
+                    <p class="text-red-100 text-sm">วางแผนเป้าหมาย และวิเคราะห์จุดอ่อน</p>
+                </div>
+                <button onclick="navigateTo('screen-menu')" class="text-red-200 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            </div>
+
+            <div class="p-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-5">
+                        <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                            <label class="block text-gray-800 font-bold mb-1">🎯 1. เป้าหมาย APE (Issue) ที่ต้องการ</label>
+                            <input type="number" id="pl-target" class="w-full text-xl font-bold text-pru-red border-b-2 border-red-300 bg-transparent focus:outline-none" value="100000" oninput="calculatePlan()">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs text-gray-500 font-bold">Issue Rate (%)</label>
+                                <input type="number" id="pl-issue-rate" class="w-full border rounded px-3 py-2" value="85" oninput="calculatePlan()">
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-500 font-bold">Case Size เฉลี่ย (บาท)</label>
+                                <input type="number" id="pl-casesize" class="w-full border rounded px-3 py-2" value="25000" oninput="calculatePlan()">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h4 class="font-bold text-gray-700">สถิติ Conversion ปัจจุบันของคุณ (%)</h4>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-xs text-gray-500">Contact Rate (Lead->Call)</label>
+                                <div class="flex items-center"><input type="number" id="pl-rate1" class="w-16 border rounded px-2 py-1 mr-1" value="50" oninput="calculatePlan()"> %</div>
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-500">Appt Rate (Call->Appt)</label>
+                                <div class="flex items-center"><input type="number" id="pl-rate2" class="w-16 border rounded px-2 py-1 mr-1" value="30" oninput="calculatePlan()"> %</div>
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-500">Show Rate (Appt->Present)</label>
+                                <div class="flex items-center"><input type="number" id="pl-rate3" class="w-16 border rounded px-2 py-1 mr-1" value="70" oninput="calculatePlan()"> %</div>
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-500">Closing Rate (Present->Close)</label>
+                                <div class="flex items-center"><input type="number" id="pl-rate4" class="w-16 border rounded px-2 py-1 mr-1" value="40" oninput="calculatePlan()"> %</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-xl p-6 border border-gray-200 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">📊 ผลลัพธ์การวางแผน</h3>
+                            
+                            <div class="mb-4">
+                                <div class="text-sm text-gray-500">ต้องมี APE Submit (ส่งงาน)</div>
+                                <div class="text-xl font-bold text-gray-800"><span id="pl-res-submit">0</span> บาท</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="text-sm text-gray-500">ต้องปิดการขายให้ได้ (ราย)</div>
+                                <div class="text-2xl font-bold text-green-600"><span id="pl-res-cases">0</span> ราย</div>
+                            </div>
+
+                            <div class="bg-indigo-900 text-white p-4 rounded-lg shadow-lg text-center transform scale-105">
+                                <div class="text-xs text-indigo-300 uppercase tracking-widest">ต้องหา Lead ทั้งหมด</div>
+                                <div class="text-4xl font-bold mt-1" id="pl-res-leads">0</div>
+                                <div class="text-xs text-indigo-300 mt-1">รายชื่อมุ่งหวัง</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 bg-yellow-50 p-4 rounded border border-yellow-200">
+                            <div class="flex items-start">
+                                <i class="fas fa-lightbulb text-yellow-500 mt-1 mr-2"></i>
+                                <div>
+                                    <h4 class="font-bold text-yellow-800 text-sm">จุดที่ควรพัฒนา (Coach)</h4>
+                                    <p id="pl-coach-msg" class="text-xs text-gray-700 mt-1">กรอกข้อมูลให้ครบเพื่อรับคำแนะนำ...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm font-light opacity-80">
+                &copy; 2026 PRU ACADEMY [ttb training team]. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
 
     <script>
-        // DOM Elements
-        const inputLead = document.getElementById('inputLead');
-        const inputTicket = document.getElementById('inputTicket');
-        
-        const rangeRate1 = document.getElementById('rangeRate1');
-        const rangeRate2 = document.getElementById('rangeRate2');
-        const rangeRate3 = document.getElementById('rangeRate3');
-
-        const valRate1 = document.getElementById('valRate1');
-        const valRate2 = document.getElementById('valRate2');
-        const valRate3 = document.getElementById('valRate3');
-
-        const displayAPE = document.getElementById('displayAPE');
-        const countLead = document.getElementById('countLead');
-        const countMet = document.getElementById('countMet');
-        const countPresented = document.getElementById('countPresented');
-        const countClosed = document.getElementById('countClosed');
-
-        const barMet = document.getElementById('barMet');
-        const barPresented = document.getElementById('barPresented');
-        const barClosed = document.getElementById('barClosed');
-        
-        const txtRate1 = document.getElementById('txtRate1');
-        const txtRate2 = document.getElementById('txtRate2');
-        const txtRate3 = document.getElementById('txtRate3');
-
-        const learningTip = document.getElementById('learningTip');
-        const totalConversion = document.getElementById('totalConversion');
-        const valuePerLead = document.getElementById('valuePerLead');
-
-        // Main Calculation Function
-        function calculateFunnel() {
-            // Get Values
-            let leads = parseInt(inputLead.value) || 0;
-            let ticket = parseInt(inputTicket.value) || 0;
-            let r1 = parseInt(rangeRate1.value);
-            let r2 = parseInt(rangeRate2.value);
-            let r3 = parseInt(rangeRate3.value);
-
-            // Update Text Displays for Sliders
-            valRate1.innerText = r1 + '%';
-            valRate2.innerText = r2 + '%';
-            valRate3.innerText = r3 + '%';
-            txtRate1.innerText = r1 + '%';
-            txtRate2.innerText = r2 + '%';
-            txtRate3.innerText = r3 + '%';
-
-            // Calculate People Count (Round down implies realistic full persons)
-            // Step 1 -> 2
-            let met = Math.round(leads * (r1 / 100));
-            // Step 2 -> 3
-            let presented = Math.round(met * (r2 / 100));
-            // Step 3 -> 4
-            let closed = Math.round(presented * (r3 / 100));
-
-            // Calculate Money
-            let totalAPE = closed * ticket;
-            let conversionTotal = leads > 0 ? ((closed / leads) * 100).toFixed(1) : 0;
-            let valPerLead = leads > 0 ? (totalAPE / leads).toFixed(0) : 0;
-
-            // Update UI Numbers
-            countLead.innerText = leads.toLocaleString();
-            countMet.innerText = met.toLocaleString();
-            countPresented.innerText = presented.toLocaleString();
-            countClosed.innerText = closed.toLocaleString();
-            displayAPE.innerText = totalAPE.toLocaleString();
-            totalConversion.innerText = conversionTotal + '%';
-            valuePerLead.innerText = parseInt(valPerLead).toLocaleString();
-
-            // Update Bar Visual Widths (Relative to Leads being 100%)
-            // We use a minimum width so text doesn't disappear if % is low
-            let widthMet = (met / leads) * 100;
-            let widthPresented = (presented / leads) * 100;
-            let widthClosed = (closed / leads) * 100;
-
-            barMet.style.width = Math.max(widthMet, 0) + '%';
-            barPresented.style.width = Math.max(widthPresented, 0) + '%';
-            barClosed.style.width = Math.max(widthClosed, 0) + '%';
-
-            // Dynamic Learning Tips
-            generateTip(leads, ticket, r3, totalAPE);
+        // --- Navigation Logic ---
+        function navigateTo(screenId) {
+            // Hide all screens
+            document.querySelectorAll('section[id^="screen-"]').forEach(el => {
+                el.classList.add('hidden-section');
+            });
+            // Show target screen
+            document.getElementById(screenId).classList.remove('hidden-section');
+            // Reset scroll
+            window.scrollTo(0, 0);
         }
 
-        function generateTip(leads, ticket, closeRate, ape) {
-            if (closeRate < 30) {
-                learningTip.innerText = "💡 Tip: อัตราปิดการขาย (Step 4) ค่อนข้างต่ำ ลองฝึกบท Sales Script หรือเทคนิคการตอบข้อโต้แย้งเพิ่มดูนะครับ";
-            } else if (leads < 10) {
-                learningTip.innerText = "💡 Tip: ประสิทธิภาพการขายดีแล้ว แต่จำนวน Lead น้อยเกินไป ลองโฟกัสที่กิจกรรมการหาผู้มุ่งหวังเพิ่มขึ้น (Step 1) ครับ";
-            } else if (ticket < 50000) {
-                learningTip.innerText = "💡 Tip: คุณต้องเหนื่อยปิดการขายหลายรายเพื่อให้ได้ยอด ลองมองหากลุ่มลูกค้าที่มีกำลังซื้อสูงขึ้น หรือเสนอแผนที่ใหญ่ขึ้นดูไหมครับ?";
+        // --- Training Mode Logic ---
+        let currentTargetAPE = 0;
+        let currentIssueRate = 0;
+
+        function startTrainingMode() {
+            // 1. Generate Random Target (Scenario)
+            currentTargetAPE = Math.floor(Math.random() * 5 + 1) * 100000; // 100k - 500k
+            currentIssueRate = [80, 85, 90][Math.floor(Math.random() * 3)]; // 80, 85, or 90%
+            
+            // Random historical data
+            const histAPE = Math.floor(Math.random() * 500000 + 200000).toLocaleString();
+            const histCase = Math.floor(Math.random() * 10 + 2);
+
+            // 2. Set UI
+            document.getElementById('tr-target-ape').innerText = currentTargetAPE.toLocaleString();
+            document.getElementById('tr-issue-rate').innerText = currentIssueRate + "%";
+            document.getElementById('tr-hist-ape').innerText = histAPE;
+            document.getElementById('tr-hist-case').innerText = histCase;
+
+            // Reset Input & Steps
+            document.getElementById('inp-user-submit').value = '';
+            document.getElementById('calc-feedback').classList.add('hidden');
+            document.getElementById('training-step-funnel').classList.add('hidden-section');
+
+            // Go to screen
+            navigateTo('screen-training');
+        }
+
+        function checkTrainingAnswer() {
+            const userSubmit = parseFloat(document.getElementById('inp-user-submit').value);
+            const feedback = document.getElementById('calc-feedback');
+
+            // Logic: Submit * Issue% = Target  => Submit = Target / Issue%
+            const correctSubmit = currentTargetAPE / (currentIssueRate / 100);
+            
+            // Allow small margin of error (rounding)
+            const margin = 100; 
+            
+            if (userSubmit >= (correctSubmit - margin) && userSubmit <= (correctSubmit + margin)) {
+                feedback.innerHTML = `<span class="text-green-600"><i class="fas fa-check-circle"></i> ถูกต้อง! (Submit ที่ควรส่งคือ ~${Math.round(correctSubmit).toLocaleString()})</span>`;
+                feedback.classList.remove('hidden');
+                // Unlock Next Step
+                setTimeout(() => {
+                    document.getElementById('training-step-funnel').classList.remove('hidden-section');
+                    // Scroll down
+                    document.getElementById('training-step-funnel').scrollIntoView({behavior: "smooth"});
+                }, 800);
             } else {
-                learningTip.innerText = "✨ เยี่ยมมาก! ตัวเลขดูสมดุล ลองปรับเล่นดูว่า ถ้าเพิ่ม Lead อีก 10% จะได้ผลลัพธ์เพิ่มขึ้นเท่าไหร่?";
+                feedback.innerHTML = `<span class="text-red-600"><i class="fas fa-times-circle"></i> ยังไม่ถูกครับ ลองคำนวณใหม่: เป้าหมาย ${currentTargetAPE.toLocaleString()} / ${currentIssueRate}%</span>`;
+                feedback.classList.remove('hidden');
             }
         }
 
-        // Scenario Loader
-        function loadScenario(type) {
-            if (type === 'cisa1') {
-                // นาย A
-                inputLead.value = 25;
-                inputTicket.value = 100000;
-                rangeRate1.value = 60; // 25 -> 15
-                rangeRate2.value = 80; // 15 -> 12
-                rangeRate3.value = 50; // 12 -> 6
-            } else if (type === 'cisa2') {
-                // นาย B
-                inputLead.value = 14;
-                inputTicket.value = 200000;
-                rangeRate1.value = 70; // 14 -> 10
-                rangeRate2.value = 70; // 10 -> 7
-                rangeRate3.value = 45; // 7 -> 3 (approx)
-            } else if (type === 'cfsa') {
-                // จุ๊บจิ๊บ High Perf
-                inputLead.value = 12;
-                inputTicket.value = 300000; // สมมติให้เห็นภาพ
-                rangeRate1.value = 80;
-                rangeRate2.value = 80;
-                rangeRate3.value = 80;
+        function calcTrainingFunnel() {
+            const lead = parseFloat(document.getElementById('tr-lead').value) || 0;
+            const call = parseFloat(document.getElementById('tr-call').value) || 0;
+            const appt = parseFloat(document.getElementById('tr-appt').value) || 0;
+            const present = parseFloat(document.getElementById('tr-present').value) || 0;
+            const close = parseFloat(document.getElementById('tr-close').value) || 0;
+            const size = parseFloat(document.getElementById('tr-casesize').value) || 0;
+
+            // Calculate Rates
+            const r1 = lead > 0 ? (call/lead)*100 : 0;
+            const r2 = call > 0 ? (appt/call)*100 : 0;
+            const r3 = appt > 0 ? (present/appt)*100 : 0;
+            const r4 = present > 0 ? (close/present)*100 : 0;
+
+            // Update UI
+            document.getElementById('res-rate-1').innerText = r1.toFixed(1) + '%';
+            document.getElementById('res-rate-2').innerText = r2.toFixed(1) + '%';
+            document.getElementById('res-rate-3').innerText = r3.toFixed(1) + '%';
+            document.getElementById('res-rate-4').innerText = r4.toFixed(1) + '%';
+
+            // Final APE
+            const totalAPE = close * size;
+            document.getElementById('res-final-ape').innerText = totalAPE.toLocaleString();
+        }
+
+        // --- Planning Mode Logic ---
+        function calculatePlan() {
+            // Inputs
+            const target = parseFloat(document.getElementById('pl-target').value) || 0;
+            const issueRate = parseFloat(document.getElementById('pl-issue-rate').value) || 100;
+            const caseSize = parseFloat(document.getElementById('pl-casesize').value) || 0;
+            
+            const r1 = parseFloat(document.getElementById('pl-rate1').value) / 100; // Lead->Call
+            const r2 = parseFloat(document.getElementById('pl-rate2').value) / 100; // Call->Appt
+            const r3 = parseFloat(document.getElementById('pl-rate3').value) / 100; // Appt->Present
+            const r4 = parseFloat(document.getElementById('pl-rate4').value) / 100; // Present->Close
+
+            // Backward Calculation
+            // 1. Submit Needed
+            const submitNeeded = target / (issueRate / 100);
+            
+            // 2. Cases Needed
+            const casesNeeded = caseSize > 0 ? submitNeeded / caseSize : 0;
+
+            // 3. Funnel Reverse
+            // Close = casesNeeded
+            // Present = Close / r4
+            // Appt = Present / r3
+            // Call = Appt / r2
+            // Lead = Call / r1
+            
+            let reqPresent = r4 > 0 ? casesNeeded / r4 : 0;
+            let reqAppt = r3 > 0 ? reqPresent / r3 : 0;
+            let reqCall = r2 > 0 ? reqAppt / r2 : 0;
+            let reqLead = r1 > 0 ? reqCall / r1 : 0;
+
+            // Update UI Results
+            document.getElementById('pl-res-submit').innerText = Math.round(submitNeeded).toLocaleString();
+            document.getElementById('pl-res-cases').innerText = Math.ceil(casesNeeded);
+            document.getElementById('pl-res-leads').innerText = Math.ceil(reqLead).toLocaleString();
+
+            // AI Coach Logic (Weakness Detection)
+            let advice = [];
+            if (r4 < 0.3) advice.push("❌ อัตราปิดการขายต่ำกว่า 30%: ควรฝึกบทบทการตอบข้อโต้แย้ง (Objection Handling) และการ Closing");
+            if (r2 < 0.2) advice.push("❌ อัตราการนัดหมายต่ำ: ควรปรับปรุงบท Script ทางโทรศัพท์ให้น่าสนใจขึ้น");
+            if (r1 < 0.4) advice.push("❌ อัตราการติดต่อได้ต่ำ: ตรวจสอบคุณภาพรายชื่อ (Lead Quality) หรือช่วงเวลาที่โทร");
+            if (caseSize < 20000) advice.push("⚠️ เบี้ยต่อเคสน้อย: ลองนำเสนอแผนที่ความคุ้มครองสูงขึ้น (Up-selling)");
+
+            if (advice.length === 0) {
+                document.getElementById('pl-coach-msg').innerHTML = "<span class='text-green-600'>เยี่ยมมาก! ตัวเลข Conversion ของคุณดูแข็งแรงดี รักษามาตรฐานนี้ไว้นะครับ</span>";
+            } else {
+                document.getElementById('pl-coach-msg').innerHTML = advice.join("<br>");
             }
-            calculateFunnel();
         }
 
-        function resetDefault() {
-            inputLead.value = 25;
-            inputTicket.value = 100000;
-            rangeRate1.value = 60;
-            rangeRate2.value = 80;
-            rangeRate3.value = 50;
-            calculateFunnel();
-        }
-
-        // Event Listeners
-        [inputLead, inputTicket, rangeRate1, rangeRate2, rangeRate3].forEach(el => {
-            el.addEventListener('input', calculateFunnel);
-        });
-
-        // Initialize
-        calculateFunnel();
+        // Init Planning on load
+        calculatePlan();
 
     </script>
 </body>
