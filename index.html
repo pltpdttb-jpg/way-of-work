@@ -3,324 +3,442 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Strategy & Activity Simulator</title>
+    <title>Sales Mastery - PRU Academy</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Prompt', sans-serif; background-color: #F1F5F9; }
-        .font-head { font-family: 'Inter', sans-serif; }
-        .input-box { 
-            @apply w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+        body { font-family: 'Sarabun', sans-serif; background-color: #ffffff; }
+        
+        /* Custom Colors based on request */
+        .text-navy { color: #1e3a8a; } /* หัวข้อสีกรมท่า */
+        .text-dark-gray { color: #374151; } /* เนื้อหาสีเทาเข้ม */
+        .btn-orange { 
+            background-color: #f97316; 
+            color: white; 
+            transition: all 0.3s;
         }
-        .section-card {
-            @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6;
-        }
-        .btn-primary {
-            @apply bg-slate-900 text-white px-6 py-2.5 rounded-lg hover:bg-slate-800 transition-colors font-medium shadow-md w-full md:w-auto text-center;
-        }
-        .rate-input {
-            @apply w-20 text-center border-b-2 border-blue-200 bg-blue-50 focus:border-blue-600 focus:outline-none py-1 text-blue-900 font-bold;
-        }
+        .btn-orange:hover { background-color: #ea580c; transform: translateY(-1px); }
+        .bg-theme-blue { background-color: #0284c7; } /* แถบสีฟ้า/น้ำเงิน */
+
+        /* Input Validation Styles */
+        .input-correct { border-color: #22c55e !important; background-color: #f0fdf4 !important; color: #15803d; }
+        .input-wrong { border-color: #ef4444 !important; background-color: #fef2f2 !important; color: #b91c1c; }
+
+        .page-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .page-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="text-slate-800">
+<body class="flex flex-col min-h-screen text-slate-800">
 
-    <nav class="bg-slate-900 text-white py-4 shadow-md">
-        <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
-            <div class="font-head font-bold text-xl tracking-wide">FINANCIAL <span class="text-emerald-400">ADVISOR</span> SIMULATOR</div>
-            <div class="text-xs text-slate-400">Training Mode: v2.1</div>
-        </div>
-    </nav>
-
-    <div class="max-w-5xl mx-auto px-4 py-8">
-        
-        <div class="section-card border-l-4 border-l-emerald-500">
-            <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                📂 ส่วนที่ 1: โจทย์สถานการณ์ (Scenario)
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <p class="text-xs text-slate-500 uppercase font-semibold mb-1">เป้าหมาย (Target APE)</p>
-                    <p class="text-2xl font-bold text-slate-900" id="scenarioTarget">1,000,000</p>
-                    <p class="text-xs text-slate-400 mt-1">บาท (Issued)</p>
+    <header class="bg-theme-blue shadow-lg z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-theme-blue font-bold text-xl shadow-sm">P</div>
+                <div>
+                    <h1 class="font-bold text-xl text-white tracking-wide">PRU Academy</h1>
+                    <p class="text-xs text-blue-100">Sales Mastery System</p>
                 </div>
-                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <p class="text-xs text-slate-500 uppercase font-semibold mb-1">ผลงานเดิม (Past Performance)</p>
-                    <div class="flex justify-between items-end">
-                        <div>
-                            <p class="text-lg font-bold text-slate-700">600,000 APE</p>
-                            <p class="text-xs text-slate-400">Total Year</p>
+            </div>
+            <button onclick="goHome()" class="text-white hover:text-orange-200 text-sm font-medium flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                หน้าหลัก
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+
+        <div id="home" class="page-section active">
+            <div class="text-center py-10 space-y-6">
+                <h2 class="text-4xl font-bold text-navy">ยินดีต้อนรับสู่ระบบพัฒนาศักยภาพการขาย</h2>
+                <p class="text-dark-gray text-lg max-w-2xl mx-auto">เลือกโหมดการใช้งานเพื่อเรียนรู้คำศัพท์ หรือฝึกฝนการวางแผนเป้าหมาย (Goal Setting) และวิเคราะห์กิจกรรมการขาย (Activity Management)</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 max-w-4xl mx-auto">
+                    <div onclick="showPage('learning')" class="group bg-white border border-gray-200 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+                        <div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">📚</div>
+                        <h3 class="text-2xl font-bold text-navy mb-2">Learning Mode</h3>
+                        <p class="text-dark-gray">เรียนรู้คำศัพท์ APE, Case Size, Issue Rate และสูตรการคำนวณ Funnel พื้นฐาน</p>
+                        <div class="mt-6">
+                            <span class="text-blue-600 font-semibold group-hover:underline">เข้าสู่บทเรียน →</span>
                         </div>
-                        <div class="text-right">
-                            <p class="text-lg font-bold text-slate-700">12 Cases</p>
-                            <p class="text-xs text-slate-400">Total Count</p>
+                    </div>
+
+                    <div onclick="showPage('training')" class="group bg-white border border-gray-200 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-orange-500"></div>
+                        <div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">🎯</div>
+                        <h3 class="text-2xl font-bold text-navy mb-2">Training Workshop</h3>
+                        <p class="text-dark-gray">โจทย์จำลองสถานการณ์: คำนวณเป้าหมายและวางแผนกิจกรรมจาก Conversion Rate จริง</p>
+                        <div class="mt-6">
+                            <span class="text-orange-600 font-semibold group-hover:underline">เริ่มฝึกอบรม →</span>
                         </div>
                     </div>
                 </div>
-                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <p class="text-xs text-slate-500 uppercase font-semibold mb-1">เกณฑ์อนุมัติ (Issued Rate)</p>
-                    <p class="text-2xl font-bold text-emerald-600" id="scenarioRate">80%</p>
-                    <p class="text-xs text-slate-400 mt-1">มาตรฐานบริษัท</p>
-                </div>
             </div>
         </div>
 
-        <div class="section-card">
-            <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                1️⃣ ส่วนที่ 1: วางแผนกลยุทธ์ (Financial Strategy)
-            </h2>
-            <p class="text-sm text-slate-500 mb-6">ผู้เรียนต้องกำหนดขนาดเคส (Case Size) และยอดนำส่ง (Submit) ให้สอดคล้องกับเป้าหมายและ Issued Rate</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">ขนาดเคสเฉลี่ย (Case Size)</label>
-                    <input type="number" id="inputCaseSize" class="input-box" placeholder="ระบุบาท (เช่น 50000)" value="50000">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">เป้าหมายเบี้ยนำส่ง (APE Submitted)</label>
-                    <input type="number" id="inputSubmit" class="input-box" placeholder="ระบุบาท" value="1250000">
-                </div>
+        <div id="learning" class="page-section">
+            <div class="mb-6 border-b pb-4">
+                <h2 class="text-3xl font-bold text-navy">📚 คลังความรู้ (Vocabulary & Logic)</h2>
+                <p class="text-dark-gray mt-2">ทำความเข้าใจตัวแปรสำคัญก่อนเริ่มคำนวณจริง</p>
             </div>
-            
-            <button onclick="checkPart1()" class="btn-primary">ตรวจสอบความถูกต้อง (Verify Strategy)</button>
-            
-            <div id="resultPart1" class="hidden mt-4 p-4 rounded-lg bg-gray-50 border border-gray-200 text-sm"></div>
-        </div>
-
-        <div id="part2Section" class="section-card opacity-50 pointer-events-none transition-opacity duration-300">
-            <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                2️⃣ ส่วนที่ 2: วางแผนกิจกรรม (Activity Funnel)
-            </h2>
-            <p class="text-sm text-slate-500 mb-6">ระบุจำนวนกิจกรรมในแต่ละขั้นตอน และกำหนด Conversion Rate (%) ที่คุณคิดว่าเป็นไปได้จริง</p>
 
             <div class="space-y-6">
-                
-                <div class="flex flex-col md:flex-row items-center gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <div class="flex-1 w-full">
-                        <label class="text-xs font-bold text-slate-500 uppercase">รายชื่อ (Leads)</label>
-                        <input type="number" id="inputLeads" class="input-box bg-white mt-1" placeholder="จำนวนรายชื่อ" value="100">
-                    </div>
-                    <div class="flex flex-col items-center justify-center w-full md:w-auto px-4">
-                        <span class="text-xs text-slate-400 mb-1">Call Rate %</span>
-                        <input type="number" id="rateCall" class="rate-input" value="30">
-                        <div class="h-8 w-0.5 bg-blue-200 mt-2"></div>
-                        <div class="text-[10px] text-blue-400">▼</div>
-                    </div>
-                    <div class="flex-1 w-full">
-                        <label class="text-xs font-bold text-slate-500 uppercase">โทรนัด (Calls)</label>
-                        <input type="number" id="inputCalls" class="input-box bg-white mt-1" placeholder="จำนวนการโทร" value="30">
-                    </div>
-                </div>
-
-                <div class="flex flex-col md:flex-row items-center gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <div class="flex-1 w-full text-center md:text-right text-sm text-slate-400 hidden md:block">...จากการโทร</div>
-                    <div class="flex flex-col items-center justify-center w-full md:w-auto px-4">
-                        <span class="text-xs text-slate-400 mb-1">Meet Rate %</span>
-                        <input type="number" id="rateMeet" class="rate-input" value="50">
-                        <div class="h-8 w-0.5 bg-blue-200 mt-2"></div>
-                        <div class="text-[10px] text-blue-400">▼</div>
-                    </div>
-                    <div class="flex-1 w-full">
-                        <label class="text-xs font-bold text-slate-500 uppercase">เข้าพบ (Meetings)</label>
-                        <input type="number" id="inputMeets" class="input-box bg-white mt-1" placeholder="จำนวนเข้าพบ" value="15">
+                <div class="bg-white rounded-lg shadow border-l-4 border-blue-500 p-6">
+                    <h3 class="text-xl font-bold text-navy mb-3">1. Financial Metrics (ตัวเลขทางการเงิน)</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-dark-gray">
+                        <div class="bg-gray-50 p-4 rounded">
+                            <strong class="text-blue-700">APE (Annual Premium Equivalent)</strong><br>
+                            ยอดเบี้ยประกันภัยรับรายปี เป็นเป้าหมายหลักของฝ่ายขาย
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <strong class="text-blue-700">Case Size (Ticket Size)</strong><br>
+                            เบี้ยเฉลี่ยต่อราย = <span class="bg-white px-2 border rounded">Total APE ÷ Total Cases</span>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <strong class="text-blue-700">Issued Rate (%)</strong><br>
+                            อัตราการอนุมัติกรมธรรม์ (จากที่ส่งงานไป)<br>
+                            <span class="text-sm italic">ดังนั้น APE ที่ต้องส่งงาน (Submit) = Target APE ÷ Issued Rate</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-center gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <div class="flex-1 w-full text-center md:text-right text-sm text-slate-400 hidden md:block">...จากการเข้าพบ</div>
-                    <div class="flex flex-col items-center justify-center w-full md:w-auto px-4">
-                        <span class="text-xs text-slate-400 mb-1">Present Rate %</span>
-                        <input type="number" id="ratePresent" class="rate-input" value="80">
-                        <div class="h-8 w-0.5 bg-blue-200 mt-2"></div>
-                        <div class="text-[10px] text-blue-400">▼</div>
-                    </div>
-                    <div class="flex-1 w-full">
-                        <label class="text-xs font-bold text-slate-500 uppercase">นำเสนอ (Presentations)</label>
-                        <input type="number" id="inputPres" class="input-box bg-white mt-1" placeholder="จำนวนนำเสนอ" value="12">
-                    </div>
+                <div class="bg-white rounded-lg shadow border-l-4 border-orange-500 p-6">
+                    <h3 class="text-xl font-bold text-navy mb-3">2. Activity Funnel (กระบวนการขาย)</h3>
+                    <p class="mb-4 text-dark-gray">การคำนวณย้อนกลับ (Reverse Calculation) จากเป้าหมายสู่การกระทำ</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold">4</div>
+                            <div><strong class="text-navy">Closed (ปิดการขาย):</strong> คำนวณจาก <code class="bg-gray-100 px-2 rounded">APE Submit ÷ Case Size</code></div>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">3</div>
+                            <div><strong class="text-navy">Presented (เสนอขาย):</strong> = Closed ÷ (Closing Rate %)</div>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">2</div>
+                            <div><strong class="text-navy">Met (เข้าพบ):</strong> = Presented ÷ (Present Rate %)</div>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold">1</div>
+                            <div><strong class="text-navy">Call (โทรนัด):</strong> = Met ÷ (Meet Rate %)</div>
+                        </li>
+                         <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center font-bold">0</div>
+                            <div><strong class="text-navy">Leads (รายชื่อ):</strong> = Call ÷ (Call Rate %)</div>
+                        </li>
+                    </ul>
                 </div>
-
-                <div class="flex flex-col md:flex-row items-center gap-4 bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <div class="flex-1 w-full text-center md:text-right text-sm text-slate-400 hidden md:block">...จากการนำเสนอ</div>
-                    <div class="flex flex-col items-center justify-center w-full md:w-auto px-4">
-                        <span class="text-xs text-emerald-600 font-bold mb-1">Close Rate %</span>
-                        <input type="number" id="rateClose" class="rate-input bg-emerald-100 border-emerald-300 text-emerald-800 focus:border-emerald-600" value="50">
-                        <div class="h-8 w-0.5 bg-emerald-300 mt-2"></div>
-                        <div class="text-[10px] text-emerald-600">▼</div>
-                    </div>
-                    <div class="flex-1 w-full">
-                        <label class="text-xs font-bold text-emerald-700 uppercase">ปิดการขาย (Closed Cases)</label>
-                        <input type="number" id="inputClosed" class="input-box border-emerald-300 bg-white mt-1 font-bold text-emerald-800" placeholder="จำนวนราย" value="6">
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="mt-8">
-                <button onclick="analyzeFunnel()" class="btn-primary bg-emerald-600 hover:bg-emerald-700 w-full">วิเคราะห์ผลลัพธ์ (Analyze Activity)</button>
             </div>
             
+            <div class="mt-8 text-center">
+                <button onclick="showPage('training')" class="btn-orange px-8 py-3 rounded-lg font-bold shadow-lg">ไปสู่โหมดฝึกอบรม</button>
+            </div>
         </div>
 
-        <div id="analysisReport" class="hidden section-card border-t-4 border-t-indigo-500 bg-slate-50">
-            <h2 class="text-xl font-bold text-indigo-900 mb-4">📊 ผลวิเคราะห์ประสิทธิภาพ (Performance Audit)</h2>
-            <div id="reportContent" class="space-y-4">
+        <div id="training" class="page-section">
+            <div class="bg-navy-900 bg-slate-800 text-white rounded-xl p-6 mb-8 shadow-lg relative overflow-hidden">
+                <div class="flex justify-between items-start z-10 relative">
+                    <div>
+                        <h2 class="text-2xl font-bold text-orange-400 mb-2">📋 โจทย์จำลองสถานการณ์</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 text-sm md:text-base">
+                            <div>
+                                <p class="text-gray-400 text-xs uppercase">เป้าหมาย APE ที่ต้องการ</p>
+                                <p class="text-2xl font-bold" id="scenTargetAPE">loading...</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-xs uppercase">ผลงานเดิม (Past Performance)</p>
+                                <p>Total APE: <span id="scenPastAPE" class="font-mono text-yellow-300">...</span></p>
+                                <p>Total Cases: <span id="scenPastCase" class="font-mono text-yellow-300">...</span> ราย</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-xs uppercase">Issued Rate</p>
+                                <p class="text-2xl font-bold text-green-400" id="scenIssueRate">...%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="generateScenario()" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-white border border-white/20 transition">สุ่มโจทย์ใหม่</button>
                 </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="bg-navy-blue bg-blue-900 text-white w-8 h-8 flex items-center justify-center rounded-full font-bold">1</span>
+                        <h3 class="text-lg font-bold text-navy">ส่วนที่ 1: คำนวณเป้าหมาย (Financials)</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-dark-gray mb-1">1.1 Case Size (เบี้ยเฉลี่ยต่อราย)</label>
+                            <input type="number" id="ansCaseSize" class="w-full border-gray-300 border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="คำนวณจากผลงานเดิม...">
+                            <p class="text-xs text-gray-400 mt-1">* คิดจาก Past APE และ Past Cases</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-dark-gray mb-1">1.2 APE Submitted (ยอดส่งงาน)</label>
+                            <input type="number" id="ansSubmitAPE" class="w-full border-gray-300 border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="ต้องส่งงานเท่าไหร่เพื่อให้ได้เป้าอนุมัติ...">
+                            <p class="text-xs text-gray-400 mt-1">* คิดจาก Target APE และ Issued Rate</p>
+                        </div>
+                        <button onclick="checkPart1()" class="w-full btn-orange py-2 rounded-lg font-bold mt-2">ตรวจสอบความถูกต้อง (Part 1)</button>
+                    </div>
+                </div>
+
+                <div id="part2Section" class="bg-white p-6 rounded-xl shadow-md border border-gray-100 opacity-50 pointer-events-none filter grayscale transition-all duration-500">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="bg-navy-blue bg-blue-900 text-white w-8 h-8 flex items-center justify-center rounded-full font-bold">2</span>
+                        <h3 class="text-lg font-bold text-navy">ส่วนที่ 2: วางแผนกิจกรรม (Activity)</h3>
+                    </div>
+                    
+                    <div class="space-y-5">
+                         <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                            <p class="text-xs font-bold text-navy mb-2 uppercase">Conversion Rates (แก้ไขได้)</p>
+                            <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                                <div>
+                                    <label>Lead>Call</label>
+                                    <input type="number" id="rateLeadCall" class="w-full text-center p-1 rounded border border-blue-200 text-blue-800 font-bold" value="10">
+                                </div>
+                                <div>
+                                    <label>Call>Met</label>
+                                    <input type="number" id="rateCallMet" class="w-full text-center p-1 rounded border border-blue-200 text-blue-800 font-bold" value="30">
+                                </div>
+                                <div>
+                                    <label>Met>Pres</label>
+                                    <input type="number" id="rateMetPres" class="w-full text-center p-1 rounded border border-blue-200 text-blue-800 font-bold" value="70">
+                                </div>
+                                <div>
+                                    <label>Pres>Close</label>
+                                    <input type="number" id="ratePresClose" class="w-full text-center p-1 rounded border border-blue-200 text-blue-800 font-bold" value="40">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-2">
+                                <label class="w-1/3 text-sm font-bold text-right text-navy">ปิดการขาย (ราย):</label>
+                                <input type="number" id="ansClosed" class="flex-1 border p-2 rounded text-sm" placeholder="?">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <label class="w-1/3 text-sm font-medium text-right text-gray-600">นำเสนอ (ราย):</label>
+                                <input type="number" id="ansPres" class="flex-1 border p-2 rounded text-sm" placeholder="?">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <label class="w-1/3 text-sm font-medium text-right text-gray-600">เข้าพบ (ราย):</label>
+                                <input type="number" id="ansMet" class="flex-1 border p-2 rounded text-sm" placeholder="?">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <label class="w-1/3 text-sm font-medium text-right text-gray-600">โทรนัด (ราย):</label>
+                                <input type="number" id="ansCall" class="flex-1 border p-2 rounded text-sm" placeholder="?">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <label class="w-1/3 text-sm font-medium text-right text-gray-600">Leads (ราย):</label>
+                                <input type="number" id="ansLead" class="flex-1 border p-2 rounded text-sm" placeholder="?">
+                            </div>
+                        </div>
+
+                        <button onclick="checkPart2()" class="w-full btn-orange py-2 rounded-lg font-bold">ตรวจสอบแผนงาน (Part 2)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="feedbackArea" class="hidden mt-8 p-6 bg-slate-50 rounded-xl border-l-4 border-indigo-500 shadow-sm animate-pulse">
+                <h4 class="text-xl font-bold text-navy mb-2">💡 ผลการวิเคราะห์ (Analysis)</h4>
+                <div id="feedbackText" class="text-dark-gray space-y-2"></div>
+            </div>
         </div>
 
-    </div>
+    </main>
+
+    <footer class="bg-gray-100 border-t border-gray-300 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto text-center px-4">
+            <p class="text-sm text-gray-500 font-medium">Powered by : <span class="text-orange-600 font-bold">PRU Academy</span> [ttb training team]</p>
+            <p class="text-xs text-gray-400 mt-1">© 2024 All Rights Reserved</p>
+        </div>
+    </footer>
 
     <script>
-        // --- 1. CONFIGURATION & SCENARIO ---
-        const SCENARIO = {
-            targetAPE: 1000000,
-            pastAvgCase: 50000, // จากประวัติ 600k / 12 cases
-            issuedRate: 0.80 // 80%
+        // --- State Management ---
+        let currentScenario = {
+            targetAPE: 0,
+            pastAPE: 0,
+            pastCase: 0,
+            issueRate: 0,
+            // Hidden answers
+            realCaseSize: 0,
+            realSubmitAPE: 0
         };
 
-        // --- 2. PART 1 LOGIC ---
-        let plannedCaseSize = 0;
-        let plannedSubmit = 0;
-
-        function checkPart1() {
-            const size = parseFloat(document.getElementById('inputCaseSize').value);
-            const submit = parseFloat(document.getElementById('inputSubmit').value);
-            const resultDiv = document.getElementById('resultPart1');
-            const part2 = document.getElementById('part2Section');
-
-            if (!size || !submit) {
-                alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-                return;
-            }
-
-            plannedCaseSize = size;
-            plannedSubmit = submit;
-
-            // Calculation
-            const expectedIssue = submit * SCENARIO.issuedRate;
-            const isTargetMet = expectedIssue >= SCENARIO.targetAPE;
-            const casesNeeded = Math.ceil(submit / size);
-
-            let html = '';
-            if (isTargetMet) {
-                html += `<div class="text-emerald-700 font-bold mb-2">✅ กลยุทธ์ผ่านเกณฑ์!</div>`;
-                html += `<ul class="list-disc pl-5 text-slate-600 space-y-1">`;
-                html += `<li>คุณวางเป้า Submit <strong>${submit.toLocaleString()}</strong> x 80% = <strong>${expectedIssue.toLocaleString()}</strong> (ถึงเป้า 1M)</li>`;
-                html += `<li>ด้วย Case Size <strong>${size.toLocaleString()}</strong> คุณต้องขายให้ได้ประมาณ <strong>${casesNeeded} ราย</strong></li>`;
-                html += `</ul>`;
-                
-                // Unlock Part 2
-                part2.classList.remove('opacity-50', 'pointer-events-none');
-                
-                // Pre-fill target cases for user convenience (optional, but helpful)
-                // document.getElementById('inputClosed').value = casesNeeded;
-                
-            } else {
-                html += `<div class="text-red-600 font-bold mb-2">❌ กลยุทธ์ยังไม่ถึงเป้าหมาย</div>`;
-                html += `<p class="text-slate-600">Submit ${submit.toLocaleString()} จะอนุมัติได้เพียง ${expectedIssue.toLocaleString()} ซึ่งต่ำกว่าเป้า 1,000,000</p>`;
-                html += `<p class="text-sm mt-2 font-semibold">ข้อแนะนำ: ต้องเพิ่มยอด Submit เป็นอย่างน้อย ${(SCENARIO.targetAPE / SCENARIO.issuedRate).toLocaleString()}</p>`;
-                
-                // Lock Part 2
-                part2.classList.add('opacity-50', 'pointer-events-none');
-            }
-
-            resultDiv.innerHTML = html;
-            resultDiv.classList.remove('hidden');
-            if(isTargetMet) resultDiv.classList.add('bg-emerald-50', 'border-emerald-200');
-            else resultDiv.classList.add('bg-red-50', 'border-red-200');
+        // --- Navigation ---
+        function goHome() {
+            showPage('home');
         }
 
-        // --- 3. PART 2 LOGIC & ANALYSIS ---
-        function analyzeFunnel() {
-            // Get Inputs
-            const leads = parseFloat(document.getElementById('inputLeads').value) || 0;
-            const calls = parseFloat(document.getElementById('inputCalls').value) || 0;
-            const meets = parseFloat(document.getElementById('inputMeets').value) || 0;
-            const pres = parseFloat(document.getElementById('inputPres').value) || 0;
-            const closed = parseFloat(document.getElementById('inputClosed').value) || 0;
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            if(pageId === 'training') {
+                if(currentScenario.targetAPE === 0) generateScenario(); // Only gen if empty
+            }
+        }
 
-            const rCall = parseFloat(document.getElementById('rateCall').value) / 100;
-            const rMeet = parseFloat(document.getElementById('rateMeet').value) / 100;
-            const rPres = parseFloat(document.getElementById('ratePresent').value) / 100;
-            const rClose = parseFloat(document.getElementById('rateClose').value) / 100;
+        // --- Training Logic ---
+        function generateScenario() {
+            // Randomize Data
+            const targets = [500000, 1000000, 1200000, 2000000, 600000];
+            const issueRates = [75, 80, 85, 90];
+            
+            currentScenario.targetAPE = targets[Math.floor(Math.random() * targets.length)];
+            currentScenario.pastCase = Math.floor(Math.random() * 20) + 10; // 10-30 cases
+            // Create Past APE based on random Case Size (20k - 100k)
+            let randomCaseSize = Math.floor(Math.random() * 8 + 2) * 10000; 
+            currentScenario.pastAPE = currentScenario.pastCase * randomCaseSize;
+            currentScenario.issueRate = issueRates[Math.floor(Math.random() * issueRates.length)];
 
-            const reportDiv = document.getElementById('analysisReport');
-            const contentDiv = document.getElementById('reportContent');
-            reportDiv.classList.remove('hidden');
+            // Calculate Real Answers for Validation
+            currentScenario.realCaseSize = currentScenario.pastAPE / currentScenario.pastCase;
+            currentScenario.realSubmitAPE = Math.round(currentScenario.targetAPE / (currentScenario.issueRate / 100));
 
-            let feedback = [];
+            // Render Scenario
+            document.getElementById('scenTargetAPE').innerText = currentScenario.targetAPE.toLocaleString();
+            document.getElementById('scenPastAPE').innerText = currentScenario.pastAPE.toLocaleString();
+            document.getElementById('scenPastCase').innerText = currentScenario.pastCase;
+            document.getElementById('scenIssueRate').innerText = currentScenario.issueRate;
 
-            // 3.1 Math Check (Consistency)
-            // เช็คว่า User กรอกตัวเลขสอดคล้องกับ Rate ที่ตั้งไว้หรือไม่
-            const checkStep = (prev, current, rate, name) => {
-                const calculated = Math.round(prev * rate);
-                const diff = Math.abs(current - calculated);
-                // ยอมรับความคลาดเคลื่อนได้เล็กน้อย (+/- 1-2 units)
-                if (diff > 2 && prev > 0) {
-                    return `<div class="p-3 bg-amber-50 border border-amber-200 rounded text-amber-800 text-sm">
-                        ⚠️ <strong>ตรรกะตัวเลขไม่ตรง (${name}):</strong> 
-                        คุณมี ${prev} ราย แปลง ${Math.round(rate*100)}% ควรได้ประมาณ <strong>${calculated}</strong> ราย 
-                        (แต่คุณกรอก ${current})
-                    </div>`;
+            // Reset Inputs & Styles
+            resetInputs();
+        }
+
+        function resetInputs() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                // Don't reset conversion rates
+                if(!input.id.includes('rate')) {
+                    input.value = '';
+                    input.classList.remove('input-correct', 'input-wrong');
                 }
-                return "";
-            };
+            });
+            
+            // Lock Part 2
+            const p2 = document.getElementById('part2Section');
+            p2.classList.add('opacity-50', 'pointer-events-none', 'filter', 'grayscale');
+            
+            document.getElementById('feedbackArea').classList.add('hidden');
+        }
 
-            feedback.push(checkStep(leads, calls, rCall, "Leads -> Calls"));
-            feedback.push(checkStep(calls, meets, rMeet, "Calls -> Meets"));
-            feedback.push(checkStep(meets, pres, rPres, "Meets -> Pres"));
-            feedback.push(checkStep(pres, closed, rClose, "Pres -> Close"));
+        function checkPart1() {
+            const userSize = parseFloat(document.getElementById('ansCaseSize').value);
+            const userSubmit = parseFloat(document.getElementById('ansSubmitAPE').value);
 
-            // 3.2 Target Check
-            const requiredCases = Math.ceil(plannedSubmit / plannedCaseSize);
-            if (closed < requiredCases) {
-                feedback.push(`<div class="p-3 bg-red-50 border border-red-200 rounded text-red-800 text-sm font-bold">
-                    ❌ จำนวนปิดการขายยังไม่พอ: ตามแผนในส่วนที่ 1 คุณต้องปิดให้ได้ ${requiredCases} ราย แต่แผนกิจกรรมนี้ได้เพียง ${closed} ราย
-                </div>`);
+            let isCorrect = true;
+
+            // Validate Case Size (Exact match expected)
+            const inputSize = document.getElementById('ansCaseSize');
+            if (Math.abs(userSize - currentScenario.realCaseSize) < 1) { // Allow small float diff
+                inputSize.classList.add('input-correct');
+                inputSize.classList.remove('input-wrong');
             } else {
-                feedback.push(`<div class="p-3 bg-emerald-50 border border-emerald-200 rounded text-emerald-800 text-sm font-bold">
-                    ✅ จำนวนปิดการขายเพียงพอตามเป้าหมาย! (${closed} ราย)
-                </div>`);
+                inputSize.classList.add('input-wrong');
+                inputSize.classList.remove('input-correct');
+                isCorrect = false;
             }
 
-            // 3.3 Bottleneck Analysis & Improvement Suggestions
-            // สมมติ Benchmark: Call 30%, Meet 50%, Pres 70%, Close 50%
-            const analyzeWeakness = (rate, benchmark, name, impactFunc) => {
-                if (rate < benchmark) {
-                    const improvement = benchmark - rate;
-                    const saved = impactFunc();
-                    return `<div class="p-4 bg-white border-l-4 border-indigo-500 shadow-sm rounded">
-                        <h4 class="font-bold text-indigo-900 mb-1">💡 จุดอ่อน: ${name} (${(rate*100).toFixed(0)}%)</h4>
-                        <p class="text-sm text-slate-600 mb-2">อัตรานี้ต่ำกว่ามาตรฐาน (${(benchmark*100).toFixed(0)}%) หากคุณพัฒนาทักษะส่วนนี้ให้เท่ามาตรฐานได้:</p>
-                        <p class="text-sm font-bold text-emerald-600">
-                            คุณจะลดจำนวน Leads ที่ต้องหาลงได้ถึง ${saved} ราย!
-                        </p>
-                    </div>`;
+            // Validate Submit APE
+            const inputSubmit = document.getElementById('ansSubmitAPE');
+            if (Math.abs(userSubmit - currentScenario.realSubmitAPE) < 10) { // Allow +/- 10 rounding
+                inputSubmit.classList.add('input-correct');
+                inputSubmit.classList.remove('input-wrong');
+            } else {
+                inputSubmit.classList.add('input-wrong');
+                inputSubmit.classList.remove('input-correct');
+                isCorrect = false;
+            }
+
+            if (isCorrect) {
+                // Unlock Part 2
+                const p2 = document.getElementById('part2Section');
+                p2.classList.remove('opacity-50', 'pointer-events-none', 'filter', 'grayscale');
+                // Scroll to Part 2
+                p2.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function checkPart2() {
+            // 1. Get User Input & Rates
+            const uClose = parseInt(document.getElementById('ansClosed').value) || 0;
+            const uPres = parseInt(document.getElementById('ansPres').value) || 0;
+            const uMet = parseInt(document.getElementById('ansMet').value) || 0;
+            const uCall = parseInt(document.getElementById('ansCall').value) || 0;
+            const uLead = parseInt(document.getElementById('ansLead').value) || 0;
+
+            const rPC = parseFloat(document.getElementById('ratePresClose').value) / 100;
+            const rMP = parseFloat(document.getElementById('rateMetPres').value) / 100;
+            const rCM = parseFloat(document.getElementById('rateCallMet').value) / 100;
+            const rLC = parseFloat(document.getElementById('rateLeadCall').value) / 100;
+
+            // 2. Calculate Correct Logic Chain
+            const correctClosed = Math.ceil(currentScenario.realSubmitAPE / currentScenario.realCaseSize);
+            const correctPres = Math.ceil(correctClosed / rPC);
+            const correctMet = Math.ceil(correctPres / rMP);
+            const correctCall = Math.ceil(correctMet / rCM);
+            const correctLead = Math.ceil(correctCall / rLC);
+
+            let feedbackMsg = [];
+            let allCorrect = true;
+
+            // 3. Validation Helper
+            const validate = (id, userVal, correctVal) => {
+                const el = document.getElementById(id);
+                // Allow error margin of 1-2 for rounding diffs
+                if (Math.abs(userVal - correctVal) <= 2 && userVal !== 0) {
+                    el.classList.add('input-correct');
+                    el.classList.remove('input-wrong');
+                    return true;
+                } else {
+                    el.classList.add('input-wrong');
+                    el.classList.remove('input-correct');
+                    return false;
                 }
-                return "";
             };
 
-            // คำนวณ Lead ที่ประหยัดได้ ถ้าแก้จุดอ่อนนี้ (Reverse Calculate)
-            // Formula: Leads = TargetClosed / (rCall * rMeet * rPres * rClose)
-            const currentTotalConv = rCall * rMeet * rPres * rClose;
-            
-            // Analyze Close Rate Weakness
-            feedback.push(analyzeWeakness(rClose, 0.50, "Closing Rate", () => {
-                const improvedConv = rCall * rMeet * rPres * 0.50; // ปรับ Close เป็น 50%
-                const leadsCurrent = Math.ceil(closed / currentTotalConv); // Lead ที่ต้องใช้ปัจจุบันเพื่อให้ได้ target นี้
-                const leadsImproved = Math.ceil(closed / improvedConv);
-                return (leadsCurrent - leadsImproved).toLocaleString();
-            }));
+            // Check Step by Step
+            if(!validate('ansClosed', uClose, correctClosed)) allCorrect = false;
+            if(!validate('ansPres', uPres, correctPres)) allCorrect = false;
+            if(!validate('ansMet', uMet, correctMet)) allCorrect = false;
+            if(!validate('ansCall', uCall, correctCall)) allCorrect = false;
+            if(!validate('ansLead', uLead, correctLead)) allCorrect = false;
 
-            // Analyze Call Rate Weakness
-            feedback.push(analyzeWeakness(rCall, 0.30, "Calling Success Rate", () => {
-                const improvedConv = 0.30 * rMeet * rPres * rClose;
-                const leadsCurrent = Math.ceil(closed / currentTotalConv);
-                const leadsImproved = Math.ceil(closed / improvedConv);
-                return (leadsCurrent - leadsImproved).toLocaleString();
-            }));
+            // 4. Generate Feedback
+            const feedbackArea = document.getElementById('feedbackArea');
+            const feedbackText = document.getElementById('feedbackText');
+            feedbackArea.classList.remove('hidden');
 
-            contentDiv.innerHTML = feedback.join("");
+            if (allCorrect) {
+                feedbackArea.classList.remove('animate-pulse');
+                feedbackArea.classList.add('bg-green-50', 'border-green-500');
+                feedbackArea.classList.remove('bg-slate-50', 'border-indigo-500');
+                
+                let tips = "<ul class='list-disc pl-5 text-green-800 font-medium'><li>ยอดเยี่ยม! คุณคำนวณแผนงานได้ถูกต้องทั้งหมด</li>";
+                
+                // Analyze Rates for Improvement
+                if (rPC < 0.3) tips += "<li class='text-orange-600'>ข้อสังเกต: Closing Rate ของคุณต่ำกว่า 30% ถ้าพัฒนาทักษะการปิดการขาย จะช่วยลดจำนวน Lead ที่ต้องหาลงได้มาก</li>";
+                if (rLC < 0.1) tips += "<li class='text-orange-600'>ข้อสังเกต: Lead to Call ต่ำ (รายชื่อไม่มีคุณภาพ?) ลองสกรีนรายชื่อให้แม่นยำขึ้น</li>";
+                
+                tips += "</ul>";
+                feedbackText.innerHTML = tips;
+
+            } else {
+                feedbackArea.classList.add('bg-slate-50', 'border-indigo-500');
+                feedbackArea.classList.remove('bg-green-50', 'border-green-500');
+                
+                let msg = "<p class='text-red-600 font-bold'>พบจุดที่คำนวณไม่ตรงกับสูตร:</p><ul class='list-disc pl-5 mt-2'>";
+                if(Math.abs(uClose - correctClosed) > 2) msg += `<li>จำนวนปิดการขายควรเป็น ~${correctClosed} ราย (คิดจาก APE Submit / Case Size)</li>`;
+                if(Math.abs(uPres - correctPres) > 2) msg += `<li>จำนวนนำเสนอควรเป็น ~${correctPres} ราย (คิดจาก ปิดการขาย / ${rPC*100}%)</li>`;
+                // Add more logic hints if needed
+                msg += "</ul><p class='mt-2 text-sm text-gray-500'>*ลองตรวจสอบการหารและปัดเศษทศนิยมอีกครั้ง</p>";
+                feedbackText.innerHTML = msg;
+            }
         }
     </script>
 </body>
